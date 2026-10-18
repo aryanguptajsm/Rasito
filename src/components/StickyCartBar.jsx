@@ -20,7 +20,7 @@ export default function StickyCartBar() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <ShoppingBag size={20} />
-            <span className="absolute -top-1.5 -right-1.5 bg-terracotta text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-terracotta text-[10px] font-bold text-dark">
               {itemCount}
             </span>
           </div>

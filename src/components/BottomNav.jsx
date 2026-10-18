@@ -3,7 +3,7 @@ import { Home, ShoppingBag, ClipboardList, ShoppingCart, UserRound } from 'lucid
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
-  { to: '/menu', icon: ShoppingBag, label: 'Order' },
+  { to: '/menu', icon: ShoppingBag, label: 'Menu' },
   { to: '/orders', icon: ClipboardList, label: 'Orders' },
   { to: '/cart', icon: ShoppingCart, label: 'Cart' },
   { to: '/profile', icon: UserRound, label: 'Profile' },
