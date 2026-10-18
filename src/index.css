@@ -6,13 +6,13 @@
 
 /* Custom Tailwind Theme */
 @theme {
-  --color-cream: #FFF8F0;
+  --color-cream: #E7E8EB;
   --color-white: #FFFFFF;
-  --color-chocolate: #593824;
-  --color-terracotta: #C76D45;
-  --color-peach: #F6E2D3;
-  --color-dark: #29221E;
-  --color-muted: #81766E;
+  --color-chocolate: #20211D;
+  --color-terracotta: #F7CE27;
+  --color-peach: #ECEDEA;
+  --color-dark: #20211D;
+  --color-muted: #747A82;
 }
 
 /* ============================================================
@@ -37,11 +37,29 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #FFF8F0;
-  color: #29221E;
+  background-color: #E7E8EB;
+  color: #20211D;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+button, a, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  color: #20211D;
+  background: #F7CE27;
+}
+
+/* Bright yellow controls use dark ink for clear contrast. */
+.bg-terracotta.text-white {
+  color: #20211D;
+}
+
+.bg-terracotta.text-white svg {
+  color: inherit;
 }
 
 /* ============================================================
