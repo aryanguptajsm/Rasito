@@ -20,12 +20,12 @@ function AppLayout() {
   const isAdmin = location.pathname.startsWith('/admin');
 
   return (
-    <div className="flex flex-col min-h-screen bg-cream">
+    <div className="flex min-h-screen flex-col bg-cream">
       {!isAdmin && <Header onSearch={setSearchQuery} />}
 
-      <main className="flex-1 pb-16 md:pb-0">
+      <main className="flex-1 pb-20 md:pb-0">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage searchQuery={searchQuery} />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
