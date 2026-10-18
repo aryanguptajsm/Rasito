@@ -46,7 +46,7 @@ export default function ProductCard({ product, compact = false }) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className={`group block bg-white rounded-2xl border border-peach/20 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${
+      className={`group block bg-white rounded-[20px] border border-black/5 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${
         !product.available ? 'opacity-60' : ''
       } ${compact ? '' : ''}`}
       aria-label={`${product.name}, ₹${product.price}`}
@@ -68,7 +68,7 @@ export default function ProductCard({ product, compact = false }) {
           </div>
         )}
         {discountPercent && (
-          <span className="absolute top-2 left-2 bg-terracotta text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+              <span className="absolute top-2 left-2 bg-terracotta text-dark text-[10px] font-bold px-2 py-0.5 rounded-full">
             {discountPercent}% OFF
           </span>
         )}
@@ -106,7 +106,7 @@ export default function ProductCard({ product, compact = false }) {
               {quantity === 0 ? (
                 <button
                   onClick={handleAdd}
-                  className="flex items-center gap-1 bg-terracotta text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-terracotta/90 active:scale-95 transition-all min-h-[32px]"
+                  className="flex items-center gap-1 bg-terracotta text-dark text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-terracotta/90 active:scale-95 transition-all min-h-[32px]"
                   aria-label={`Add ${product.name} to cart`}
                 >
                   <Plus size={14} />
@@ -116,17 +116,17 @@ export default function ProductCard({ product, compact = false }) {
                 <div className="flex items-center gap-0 bg-terracotta rounded-full overflow-hidden min-h-[32px]">
                   <button
                     onClick={handleDecrement}
-                    className="text-white px-2 py-1.5 hover:bg-terracotta/80 active:scale-95 transition-all"
+                    className="text-dark px-2 py-1.5 hover:bg-terracotta/80 active:scale-95 transition-all"
                     aria-label={`Decrease ${product.name} quantity`}
                   >
                     <Minus size={14} />
                   </button>
-                  <span className="text-white text-xs font-bold min-w-[20px] text-center">
+                  <span className="text-dark text-xs font-bold min-w-[20px] text-center">
                     {quantity}
                   </span>
                   <button
                     onClick={handleIncrement}
-                    className="text-white px-2 py-1.5 hover:bg-terracotta/80 active:scale-95 transition-all"
+                    className="text-dark px-2 py-1.5 hover:bg-terracotta/80 active:scale-95 transition-all"
                     aria-label={`Increase ${product.name} quantity`}
                   >
                     <Plus size={14} />

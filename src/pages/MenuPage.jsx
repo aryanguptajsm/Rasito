@@ -32,6 +32,10 @@ export default function MenuPage() {
     if (cat) setActiveCategory(cat);
   }, [searchParams]);
 
+  useEffect(() => {
+    setSearchQuery(searchParams.get('search') || '');
+  }, [searchParams]);
+
   // Filter and sort
   useEffect(() => {
     let result = [...products];
