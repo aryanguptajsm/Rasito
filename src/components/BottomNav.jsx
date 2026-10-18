@@ -1,30 +1,31 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Grid3X3, ClipboardList, User } from 'lucide-react';
+import { Home, ShoppingBag, ClipboardList, ShoppingCart, UserRound } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
-  { to: '/menu', icon: Grid3X3, label: 'Menu' },
+  { to: '/menu', icon: ShoppingBag, label: 'Order' },
   { to: '/orders', icon: ClipboardList, label: 'Orders' },
-  { to: '/profile', icon: User, label: 'Profile' },
+  { to: '/cart', icon: ShoppingCart, label: 'Cart' },
+  { to: '/profile', icon: UserRound, label: 'Profile' },
 ];
 
 export default function BottomNav() {
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-peach/30 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/5 bg-white/95 shadow-[0_-8px_24px_rgba(31,32,29,0.06)] backdrop-blur-md md:hidden pb-safe"
       aria-label="Main navigation"
     >
-      <div className="flex items-center justify-around h-16 max-w-md mx-auto px-2">
+      <div className="mx-auto flex h-[68px] max-w-xl items-center justify-around px-1">
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
             to={to}
             end={to === '/'}
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center gap-0.5 py-1 px-3 rounded-xl min-w-[56px] transition-all ${
+              `flex min-w-[56px] flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1 transition-all ${
                 isActive
-                  ? 'text-terracotta'
-                  : 'text-muted hover:text-chocolate'
+                  ? 'text-dark'
+                  : 'text-muted hover:text-dark'
               }`
             }
             aria-label={label}
@@ -32,13 +33,13 @@ export default function BottomNav() {
             {({ isActive }) => (
               <>
                 <div
-                  className={`p-1 rounded-lg transition-all ${
-                    isActive ? 'bg-terracotta/10' : ''
+                  className={`flex h-8 w-10 items-center justify-center rounded-full transition-all ${
+                    isActive ? 'bg-terracotta text-dark' : ''
                   }`}
                 >
-                  <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+                  <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
                 </div>
-                <span className={`text-[10px] leading-tight ${isActive ? 'font-semibold' : 'font-medium'}`}>
+                <span className={`text-[9px] leading-tight ${isActive ? 'font-semibold' : 'font-medium'}`}>
                   {label}
                 </span>
               </>
