@@ -1,112 +1,79 @@
 import { Link } from 'react-router-dom';
-import { User, ShoppingBag, ClipboardList, Settings, ChevronRight, Phone, Info } from 'lucide-react';
+import { ArrowLeft, UserRound, ShoppingBag, ClipboardList, Settings, ChevronRight, Info, Clock, Truck, MapPin } from 'lucide-react';
 import config from '../data/config';
+
+const profileLinks = [
+  { to: '/orders', icon: ClipboardList, title: 'My Orders', detail: 'View your order history' },
+  { to: '/cart', icon: ShoppingBag, title: 'My Cart', detail: 'Review items in your cart' },
+  { to: '/menu', icon: Settings, title: 'Browse Menu', detail: 'Explore all products' },
+];
 
 export default function ProfilePage() {
   return (
-    <div className="min-h-screen max-w-xl mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-6">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="bg-cream p-5 rounded-full w-20 h-20 mx-auto mb-3 flex items-center justify-center">
-          <User size={36} className="text-muted" />
+    <div className="mx-auto min-h-screen max-w-xl px-4 pb-24 pt-3 sm:px-6 md:py-6">
+      <div className="grid grid-cols-[40px_1fr_40px] items-center">
+        <Link to="/" className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-dark shadow-sm transition hover:bg-cream" aria-label="Back to home">
+          <ArrowLeft size={18} />
+        </Link>
+        <h1 className="text-center text-sm font-semibold text-dark">Profile</h1>
+        <span aria-hidden="true" />
+      </div>
+
+      <div className="mb-7 mt-7 text-center">
+        <div className="mx-auto mb-3 flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#f6e6a8] shadow-sm">
+          <UserRound size={39} strokeWidth={1.6} className="text-dark" />
         </div>
-        <h1 className="text-xl font-bold text-dark">Your Profile</h1>
-        <p className="text-sm text-muted mt-1">Manage your GaonBites experience</p>
+        <h2 className="text-xl font-bold tracking-tight text-dark">Your Profile</h2>
+        <p className="mt-1 text-xs text-muted">Manage your GaonBites experience</p>
       </div>
 
-      {/* Menu Items */}
-      <div className="space-y-2">
-        <Link
-          to="/orders"
-          className="flex items-center justify-between bg-white rounded-xl border border-peach/20 p-4 shadow-sm hover:shadow-md transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="bg-terracotta/10 p-2.5 rounded-xl">
-              <ClipboardList size={18} className="text-terracotta" />
+      <div className="space-y-2.5">
+        {profileLinks.map(({ to, icon: Icon, title, detail }) => (
+          <Link
+            key={to}
+            to={to}
+            className="group flex min-h-[66px] items-center justify-between rounded-2xl bg-white px-3.5 py-3 shadow-sm transition hover:shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#fff1b7] text-dark">
+                <Icon size={18} strokeWidth={1.8} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-dark">{title}</p>
+                <p className="mt-0.5 text-[11px] text-muted">{detail}</p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-dark text-sm">My Orders</p>
-              <p className="text-xs text-muted">View your order history</p>
-            </div>
-          </div>
-          <ChevronRight size={16} className="text-muted group-hover:text-terracotta transition-colors" />
-        </Link>
-
-        <Link
-          to="/cart"
-          className="flex items-center justify-between bg-white rounded-xl border border-peach/20 p-4 shadow-sm hover:shadow-md transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-50 p-2.5 rounded-xl">
-              <ShoppingBag size={18} className="text-blue-600" />
-            </div>
-            <div>
-              <p className="font-medium text-dark text-sm">My Cart</p>
-              <p className="text-xs text-muted">Review items in your cart</p>
-            </div>
-          </div>
-          <ChevronRight size={16} className="text-muted group-hover:text-terracotta transition-colors" />
-        </Link>
-
-        <Link
-          to="/menu"
-          className="flex items-center justify-between bg-white rounded-xl border border-peach/20 p-4 shadow-sm hover:shadow-md transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="bg-green-50 p-2.5 rounded-xl">
-              <Settings size={18} className="text-green-600" />
-            </div>
-            <div>
-              <p className="font-medium text-dark text-sm">Browse Menu</p>
-              <p className="text-xs text-muted">Explore all products</p>
-            </div>
-          </div>
-          <ChevronRight size={16} className="text-muted group-hover:text-terracotta transition-colors" />
-        </Link>
+            <ChevronRight size={17} className="text-muted transition group-hover:translate-x-0.5 group-hover:text-dark" />
+          </Link>
+        ))}
       </div>
 
-      {/* Business Info */}
-      <div className="mt-8 bg-cream/50 rounded-xl p-5 space-y-3">
-        <h2 className="font-semibold text-dark text-sm">About {config.businessName}</h2>
-        <div className="space-y-2 text-xs text-muted">
-          <p className="flex items-center gap-2">
-            🕐 Weekdays: {config.openingHours.weekdays}
-          </p>
-          <p className="flex items-center gap-2">
-            🕐 Weekends: {config.openingHours.weekends}
-          </p>
-          <p className="flex items-center gap-2">
-            🚚 Delivery fee: ₹{config.delivery.fee}
-            {config.delivery.freeAbove && ` (Free above ₹${config.delivery.freeAbove})`}
-          </p>
-          <p className="flex items-center gap-2">
-            📍 Delivery: {config.delivery.estimatedTime}
-          </p>
+      <div className="mt-6 rounded-2xl bg-white p-4 shadow-sm">
+        <h2 className="mb-3 text-sm font-semibold text-dark">About {config.businessName}</h2>
+        <div className="space-y-2.5 text-xs text-muted">
+          <p className="flex items-center gap-2"><Clock size={14} className="text-dark" /> Weekdays: {config.openingHours.weekdays}</p>
+          <p className="flex items-center gap-2"><Clock size={14} className="text-dark" /> Weekends: {config.openingHours.weekends}</p>
+          <p className="flex items-center gap-2"><Truck size={14} className="text-dark" /> Delivery fee: ₹{config.delivery.fee}{config.delivery.freeAbove && ` (Free above ₹${config.delivery.freeAbove})`}</p>
+          <p className="flex items-center gap-2"><MapPin size={14} className="text-dark" /> Delivery: {config.delivery.estimatedTime}</p>
         </div>
       </div>
 
-      {/* Demo Mode Notice */}
       {config.isDemoMode && (
-        <div className="mt-4 bg-amber-50 border border-amber-100 rounded-xl p-4">
+        <div className="mt-3 rounded-2xl border border-amber-100 bg-amber-50 p-4">
           <div className="flex items-start gap-2">
-            <Info size={14} className="text-amber-500 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-700">
-              <p className="font-medium mb-1">Demo Mode</p>
+            <Info size={14} className="mt-0.5 shrink-0 text-amber-600" />
+            <div className="text-xs text-amber-800">
+              <p className="mb-1 font-semibold">Demo Mode</p>
               <p className="leading-relaxed">
-                This app is running in demo mode with sample data. User accounts, order tracking,
-                and real-time status updates will be available after backend integration with Supabase.
+                This app is running in demo mode with sample data. User accounts, order tracking, and real-time status updates will be available after backend integration with Supabase.
               </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Admin link (only visible in demo) */}
       {config.isDemoMode && (
-        <Link
-          to="/admin"
-          className="mt-4 block text-center text-xs text-muted hover:text-terracotta transition-colors"
-        >
+        <Link to="/admin" className="mt-4 block text-center text-xs text-muted transition hover:text-dark">
           Admin Dashboard (Demo) →
         </Link>
       )}
