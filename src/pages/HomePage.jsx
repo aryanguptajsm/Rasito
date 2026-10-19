@@ -15,7 +15,7 @@ export default function HomePage({ searchQuery = '' }) {
   useEffect(() => {
     productService.getBestsellers().then(setBestsellers);
     productService.getPreOrderCakes().then(setPreOrderCakes);
-    productService.getAll().then(setAllProducts);
+    productService.getAll().then(setAllProducts)
   }, []);
 
   const handleCategoryClick = (categoryId) => {
