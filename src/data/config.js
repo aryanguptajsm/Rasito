@@ -24,7 +24,7 @@ const config = {
    * Set to empty string '' if not configured yet.
    * Example: '919876543210' for +91 98765 43210
    */
-  whatsappNumber: '919785876273',
+  whatsappNumber: '917985876273',
 
   /** Delivery settings */
   delivery: {

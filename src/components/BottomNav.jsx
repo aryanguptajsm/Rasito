@@ -1,12 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { Home, ShoppingBag, ClipboardList, ShoppingCart, UserRound } from 'lucide-react';
+import { Home, ShoppingBag, ClipboardList, ShoppingCart } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
   { to: '/menu', icon: ShoppingBag, label: 'Menu' },
   { to: '/orders', icon: ClipboardList, label: 'Orders' },
   { to: '/cart', icon: ShoppingCart, label: 'Cart' },
-  { to: '/profile', icon: UserRound, label: 'Profile' },
 ];
 
 export default function BottomNav() {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, ShoppingCart, MapPin, ChevronDown, SlidersHorizontal, UserRound } from 'lucide-react';
+import { Search, ShoppingCart, MapPin, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import config from '../data/config';
 
@@ -89,9 +89,6 @@ export default function Header({ onSearch }) {
           <div className="flex items-center justify-between gap-4">
             {areaPicker}
             <div className="flex items-center gap-2">
-              <Link to="/profile" className="hidden h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:flex" aria-label="Profile">
-                <UserRound size={18} />
-              </Link>
               {cartAction}
             </div>
           </div>
@@ -130,7 +127,7 @@ export default function Header({ onSearch }) {
   }
 
   return (
-    <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${['/cart', '/profile'].includes(location.pathname) ? 'hidden md:block' : ''}`}>
+    <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="GaonBites home">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-base">🥐</span>

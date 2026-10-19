@@ -15,6 +15,7 @@ function InputField({
   placeholder,
   required = false,
   rows,
+  suggestions = [],
   value,
   error,
   onChange,
@@ -48,6 +49,7 @@ function InputField({
             type={type}
             value={value}
             onChange={onChange}
+            list={suggestions.length > 0 ? 'delivery-address-suggestions' : undefined}
             placeholder={placeholder}
             inputMode={type === 'tel' ? 'numeric' : undefined}
             maxLength={type === 'tel' ? 10 : undefined}
@@ -58,6 +60,13 @@ function InputField({
                 : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
             }`}
           />
+          {suggestions.length > 0 && (
+            <datalist id="delivery-address-suggestions">
+              {suggestions.map((suggestion) => (
+                <option key={suggestion} value={suggestion} />
+              ))}
+            </datalist>
+          )}
         )}
       </div>
       {error && (
@@ -325,7 +334,8 @@ export default function CheckoutPage() {
                 value={form.address}
                 error={errors.address}
                 onChange={handleChange('address')}
-                placeholder="House number, street name"
+                placeholder="Le Uncholia Shiv Mandir Gali"
+                suggestions={['Le Uncholia Shiv Mandir Gali']}
                 required
               />
               <InputField
