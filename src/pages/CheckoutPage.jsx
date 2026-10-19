@@ -8,6 +8,69 @@ import { useCart } from '../context/CartContext';
 import { configService, whatsappService, orderService } from '../services/dataService';
 import config from '../data/config';
 
+function InputField({
+  icon: Icon,
+  label,
+  field,
+  type = 'text',
+  placeholder,
+  required = false,
+  rows,
+  value,
+  error,
+  onChange,
+}) {
+  return (
+    <div data-error={!!error}>
+      <label className="block text-sm font-medium text-dark mb-1.5">
+        {label} {required && <span className="text-terracotta">*</span>}
+      </label>
+      <div className="relative">
+        {Icon && (
+          <Icon
+            size={16}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
+          />
+        )}
+        {rows ? (
+          <textarea
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            rows={rows}
+            className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white resize-none focus:outline-none focus:ring-2 transition-all ${
+              error
+                ? 'border-red-300 focus:ring-red-200'
+                : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
+            }`}
+          />
+        ) : (
+          <input
+            type={type}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            inputMode={type === 'tel' ? 'numeric' : undefined}
+            maxLength={type === 'tel' ? 10 : undefined}
+            autoComplete={type === 'tel' ? 'tel' : undefined}
+            className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white focus:outline-none focus:ring-2 transition-all ${
+              error
+                ? 'border-red-300 focus:ring-red-200'
+                : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
+            }`}
+          />
+        )}
+      </div>
+      {error && (
+        <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+          <AlertCircle size={12} />
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function CheckoutPage() {
   const { items, itemCount, subtotal, clearCart } = useCart();
   const navigate = useNavigate();
@@ -99,9 +162,12 @@ export default function CheckoutPage() {
   };
 
   const handleChange = (field) => (e) => {
-    setForm({ ...form, [field]: e.target.value });
+    const value = field === 'phone'
+      ? e.target.value.replace(/\D/g, '').slice(0, 10)
+      : e.target.value;
+    setForm((currentForm) => ({ ...currentForm, [field]: value }));
     if (errors[field]) {
-      setErrors({ ...errors, [field]: null });
+      setErrors((currentErrors) => ({ ...currentErrors, [field]: null }));
     }
   };
 
@@ -173,61 +239,6 @@ export default function CheckoutPage() {
 
   const hasPreOrderItems = items.some((item) => item.isPreOrder);
 
-  const InputField = ({
-    icon: Icon,
-    label,
-    field,
-    type = 'text',
-    placeholder,
-    required = false,
-    rows,
-  }) => (
-    <div data-error={!!errors[field]}>
-      <label className="block text-sm font-medium text-dark mb-1.5">
-        {label} {required && <span className="text-terracotta">*</span>}
-      </label>
-      <div className="relative">
-        {Icon && (
-          <Icon
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
-          />
-        )}
-        {rows ? (
-          <textarea
-            value={form[field]}
-            onChange={handleChange(field)}
-            placeholder={placeholder}
-            rows={rows}
-            className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white resize-none focus:outline-none focus:ring-2 transition-all ${
-              errors[field]
-                ? 'border-red-300 focus:ring-red-200'
-                : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
-            }`}
-          />
-        ) : (
-          <input
-            type={type}
-            value={form[field]}
-            onChange={handleChange(field)}
-            placeholder={placeholder}
-            className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white focus:outline-none focus:ring-2 transition-all ${
-              errors[field]
-                ? 'border-red-300 focus:ring-red-200'
-                : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
-            }`}
-          />
-        )}
-      </div>
-      {errors[field] && (
-        <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-          <AlertCircle size={12} />
-          {errors[field]}
-        </p>
-      )}
-    </div>
-  );
-
   return (
     <div className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24 md:pb-6">
       {/* Header */}
@@ -259,6 +270,9 @@ export default function CheckoutPage() {
                 icon={User}
                 label="Full Name"
                 field="name"
+                value={form.name}
+                error={errors.name}
+                onChange={handleChange('name')}
                 placeholder="Your name"
                 required
               />
@@ -267,6 +281,9 @@ export default function CheckoutPage() {
                 label="Mobile Number"
                 field="phone"
                 type="tel"
+                value={form.phone}
+                error={errors.phone}
+                onChange={handleChange('phone')}
                 placeholder="10-digit mobile number"
                 required
               />
@@ -309,6 +326,9 @@ export default function CheckoutPage() {
                 icon={Home}
                 label="Full Address"
                 field="address"
+                value={form.address}
+                error={errors.address}
+                onChange={handleChange('address')}
                 placeholder="House number, street name"
                 required
               />
@@ -316,11 +336,17 @@ export default function CheckoutPage() {
                 icon={MapPin}
                 label="Landmark"
                 field="landmark"
+                value={form.landmark}
+                error={errors.landmark}
+                onChange={handleChange('landmark')}
                 placeholder="Near temple, school, etc. (optional)"
               />
               <InputField
                 label="Delivery Instructions"
                 field="instructions"
+                value={form.instructions}
+                error={errors.instructions}
+                onChange={handleChange('instructions')}
                 placeholder="Ring the bell twice, call on arrival, etc."
                 rows={2}
               />
@@ -384,6 +410,9 @@ export default function CheckoutPage() {
                 icon={MessageSquare}
                 label="Order Notes"
                 field="orderNotes"
+                value={form.orderNotes}
+                error={errors.orderNotes}
+                onChange={handleChange('orderNotes')}
                 placeholder="Any special requests or notes"
                 rows={2}
               />
