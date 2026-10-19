@@ -45,28 +45,30 @@ function InputField({
             }`}
           />
         ) : (
-          <input
-            type={type}
-            value={value}
-            onChange={onChange}
-            list={suggestions.length > 0 ? 'delivery-address-suggestions' : undefined}
-            placeholder={placeholder}
-            inputMode={type === 'tel' ? 'numeric' : undefined}
-            maxLength={type === 'tel' ? 10 : undefined}
-            autoComplete={type === 'tel' ? 'tel' : undefined}
-            className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white focus:outline-none focus:ring-2 transition-all ${
-              error
-                ? 'border-red-300 focus:ring-red-200'
-                : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
-            }`}
-          />
-          {suggestions.length > 0 && (
-            <datalist id="delivery-address-suggestions">
-              {suggestions.map((suggestion) => (
-                <option key={suggestion} value={suggestion} />
-              ))}
-            </datalist>
-          )}
+          <>
+            <input
+              type={type}
+              value={value}
+              onChange={onChange}
+              list={suggestions.length > 0 ? 'delivery-address-suggestions' : undefined}
+              placeholder={placeholder}
+              inputMode={type === 'tel' ? 'numeric' : undefined}
+              maxLength={type === 'tel' ? 10 : undefined}
+              autoComplete={type === 'tel' ? 'tel' : undefined}
+              className={`w-full ${Icon ? 'pl-10' : 'pl-3'} pr-3 py-2.5 border rounded-xl text-sm text-dark bg-white focus:outline-none focus:ring-2 transition-all ${
+                error
+                  ? 'border-red-300 focus:ring-red-200'
+                  : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
+              }`}
+            />
+            {suggestions.length > 0 && (
+              <datalist id="delivery-address-suggestions">
+                {suggestions.map((suggestion) => (
+                  <option key={suggestion} value={suggestion} />
+                ))}
+              </datalist>
+            )}
+          </>
         )}
       </div>
       {error && (
