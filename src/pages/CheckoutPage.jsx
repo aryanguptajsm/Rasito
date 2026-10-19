@@ -11,7 +11,6 @@ import config from '../data/config';
 function InputField({
   icon: Icon,
   label,
-  field,
   type = 'text',
   placeholder,
   required = false,
@@ -269,7 +268,6 @@ export default function CheckoutPage() {
               <InputField
                 icon={User}
                 label="Full Name"
-                field="name"
                 value={form.name}
                 error={errors.name}
                 onChange={handleChange('name')}
@@ -279,7 +277,6 @@ export default function CheckoutPage() {
               <InputField
                 icon={Phone}
                 label="Mobile Number"
-                field="phone"
                 type="tel"
                 value={form.phone}
                 error={errors.phone}
@@ -325,7 +322,6 @@ export default function CheckoutPage() {
               <InputField
                 icon={Home}
                 label="Full Address"
-                field="address"
                 value={form.address}
                 error={errors.address}
                 onChange={handleChange('address')}
@@ -335,7 +331,6 @@ export default function CheckoutPage() {
               <InputField
                 icon={MapPin}
                 label="Landmark"
-                field="landmark"
                 value={form.landmark}
                 error={errors.landmark}
                 onChange={handleChange('landmark')}
@@ -343,7 +338,6 @@ export default function CheckoutPage() {
               />
               <InputField
                 label="Delivery Instructions"
-                field="instructions"
                 value={form.instructions}
                 error={errors.instructions}
                 onChange={handleChange('instructions')}
@@ -409,7 +403,6 @@ export default function CheckoutPage() {
               <InputField
                 icon={MessageSquare}
                 label="Order Notes"
-                field="orderNotes"
                 value={form.orderNotes}
                 error={errors.orderNotes}
                 onChange={handleChange('orderNotes')}
