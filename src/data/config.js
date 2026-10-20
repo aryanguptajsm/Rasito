@@ -30,9 +30,9 @@ const config = {
 
   /** Delivery settings */
   delivery: {
-    /** Delivery fee in ₹ (set 0 for free delivery) */
+    /** Delivery fee in ₹ for orders below the free-delivery threshold */
     fee: 100,
-    /** Free delivery above this amount (set null to disable) */
+    /** Free delivery on orders at or above this amount (set null to disable) */
     freeAbove: 300,
     /** Minimum order amount (set 0 to disable) */
     minimumOrder: 0,

@@ -50,8 +50,6 @@ function InputField({
               type={type}
               value={value}
               onChange={onChange}
-              value={value}
-              onChange={onChange}
               list={suggestions.length > 0 ? 'delivery-address-suggestions' : undefined}
               placeholder={placeholder}
               inputMode={type === 'tel' ? 'numeric' : undefined}
