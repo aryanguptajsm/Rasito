@@ -51,7 +51,7 @@ export default function HomePage({ searchQuery = '' }) {
             <h3 className="text-base font-bold text-dark sm:text-lg">Free Delivery</h3>
             <p className="mt-1 text-[11px] leading-relaxed text-muted sm:text-sm">
               {config.delivery.freeAbove
-                ? `On orders above ₹${config.delivery.freeAbove}`
+                ? `Free on orders of ₹${config.delivery.freeAbove} or more · ₹${config.delivery.fee} below`
                 : 'Fresh bakery treats delivered to your door'}
             </p>
             <Link to="/menu" className="mt-3 inline-flex items-center gap-1 rounded-full bg-terracotta px-4 py-2 text-[11px] font-semibold text-dark transition hover:brightness-95">

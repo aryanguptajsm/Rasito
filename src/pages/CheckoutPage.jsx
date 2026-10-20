@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, User, Phone, MapPin, Home, MessageSquare, CreditCard, Clock, AlertCircle,
-  Send, ChevronDown, Info, CheckCircle2,
+  Send, Info, CheckCircle2, PhoneCall,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { configService, whatsappService, orderService } from '../services/dataService';
@@ -48,6 +48,8 @@ function InputField({
           <>
             <input
               type={type}
+              value={value}
+              onChange={onChange}
               value={value}
               onChange={onChange}
               list={suggestions.length > 0 ? 'delivery-address-suggestions' : undefined}
@@ -250,19 +252,24 @@ export default function CheckoutPage() {
   const hasPreOrderItems = items.some((item) => item.isPreOrder);
 
   return (
-    <div className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24 md:pb-6">
+    <div className="min-h-screen max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-8 pb-24 md:pb-8">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-5">
+      <div className="flex items-center gap-3 mb-6 rounded-2xl bg-white p-4 shadow-sm sm:p-5">
         <button
           onClick={() => navigate(-1)}
-          className="p-1.5 rounded-lg hover:bg-cream text-muted hover:text-dark transition-colors"
+          className="p-2 rounded-full bg-cream hover:bg-terracotta/20 text-muted hover:text-dark transition-colors"
           aria-label="Go back"
         >
           <ArrowLeft size={20} />
         </button>
-        <div>
+        <div className="flex-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-terracotta">Almost there</p>
           <h1 className="text-xl sm:text-2xl font-bold text-dark">Checkout</h1>
-          <p className="text-xs text-muted">{itemCount} items · ₹{total}</p>
+          <p className="text-xs text-muted">{itemCount} {itemCount === 1 ? 'item' : 'items'} · Total ₹{total}</p>
+        </div>
+        <div className="hidden rounded-xl bg-cream px-3 py-2 text-right sm:block">
+          <p className="text-[10px] text-muted">Free delivery from</p>
+          <p className="text-sm font-bold text-dark">₹{config.delivery.freeAbove}</p>
         </div>
       </div>
 
@@ -271,7 +278,7 @@ export default function CheckoutPage() {
           {/* Form Section */}
           <div className="md:col-span-3 space-y-5">
             {/* Customer Details */}
-            <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
+            <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
               <h2 className="font-semibold text-dark flex items-center gap-2">
                 <User size={16} className="text-terracotta" />
                 Your Details
@@ -298,7 +305,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Delivery Address */}
-            <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
+            <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
               <h2 className="font-semibold text-dark flex items-center gap-2">
                 <MapPin size={16} className="text-terracotta" />
                 Delivery Address
@@ -359,7 +366,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment */}
-            <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
+            <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
               <h2 className="font-semibold text-dark flex items-center gap-2">
                 <CreditCard size={16} className="text-terracotta" />
                 Payment
@@ -390,7 +397,7 @@ export default function CheckoutPage() {
 
             {/* Pre-order date */}
             {hasPreOrderItems && (
-              <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
+              <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm space-y-4">
                 <h2 className="font-semibold text-dark flex items-center gap-2">
                   <Clock size={16} className="text-terracotta" />
                   Preferred Delivery Date
@@ -411,7 +418,7 @@ export default function CheckoutPage() {
             )}
 
             {/* Order notes */}
-            <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm">
+            <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm">
               <InputField
                 icon={MessageSquare}
                 label="Order Notes"
@@ -427,7 +434,7 @@ export default function CheckoutPage() {
           {/* Order Summary Sidebar */}
           <div className="md:col-span-2">
             <div className="md:sticky md:top-20 space-y-4">
-              <div className="bg-white rounded-xl border border-peach/20 p-4 sm:p-5 shadow-sm">
+              <div className="bg-white rounded-2xl border border-peach/20 p-4 sm:p-5 shadow-sm">
                 <h2 className="font-semibold text-dark mb-3">Order Summary</h2>
                 <div className="space-y-2 max-h-48 overflow-y-auto mb-3">
                   {items.map((item) => (
@@ -479,6 +486,14 @@ export default function CheckoutPage() {
                   {config.orderConfirmationNote.split('.')[0]}.
                 </p>
               </div>
+
+              <a
+                href={`tel:${config.contactPhone}`}
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-terracotta/40 bg-white py-3 text-sm font-semibold text-dark transition-colors hover:bg-terracotta/10"
+              >
+                <PhoneCall size={17} className="text-terracotta" />
+                Call us: {config.contactPhone}
+              </a>
 
               {/* Submit */}
               <button

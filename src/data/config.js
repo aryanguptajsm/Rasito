@@ -25,15 +25,17 @@ const config = {
    * Example: '919876543210' for +91 98765 43210
    */
   whatsappNumber: '917985876273',
+  /** Customer support phone number (10-digit Indian mobile number) */
+  contactPhone: '9369344748',
 
   /** Delivery settings */
   delivery: {
     /** Delivery fee in ₹ (set 0 for free delivery) */
-    fee: 20,
+    fee: 100,
     /** Free delivery above this amount (set null to disable) */
     freeAbove: 300,
     /** Minimum order amount (set 0 to disable) */
-    minimumOrder: 50,
+    minimumOrder: 0,
     /** Estimated delivery window text */
     estimatedTime: '30–60 minutes',
     /** Service areas */
