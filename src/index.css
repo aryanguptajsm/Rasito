@@ -48,6 +48,21 @@ button, a, input, select, textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
+button:not(:disabled) {
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease,
+    border-color 160ms ease, color 160ms ease;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+}
+
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
 ::selection {
   color: #20211D;
   background: #F7CE27;

@@ -15,12 +15,19 @@ import AdminPage from './pages/AdminPage';
 
 function AppLayout() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [deliveryLocation, setDeliveryLocation] = useState({ area: '', coordinates: '' });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      {!isAdmin && <Header onSearch={setSearchQuery} />}
+      {!isAdmin && (
+        <Header
+          onSearch={setSearchQuery}
+          deliveryLocation={deliveryLocation}
+          onDeliveryLocationChange={setDeliveryLocation}
+        />
+      )}
 
       <main className="flex-1 pb-20 md:pb-0">
         <Routes>
@@ -28,7 +35,15 @@ function AppLayout() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route
+            path="/checkout"
+            element={
+              <CheckoutPage
+                deliveryLocation={deliveryLocation}
+                onDeliveryLocationChange={setDeliveryLocation}
+              />
+            }
+          />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/admin" element={<AdminPage />} />
         </Routes>

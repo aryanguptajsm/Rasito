@@ -3,15 +3,18 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, ShoppingCart, MapPin, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import config from '../data/config';
+import DeliveryLocationPicker from './DeliveryLocationPicker';
 
-export default function Header({ onSearch }) {
+export default function Header({ onSearch, deliveryLocation, onDeliveryLocationChange }) {
   const { itemCount } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [locationOpen, setLocationOpen] = useState(false);
-  const [selectedArea, setSelectedArea] = useState('Select your village');
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
+  const selectedArea = deliveryLocation.area || (
+    deliveryLocation.coordinates ? 'GPS pin saved' : 'Select your village'
+  );
 
   const handleSearch = (event) => {
     const value = event.target.value;
@@ -47,20 +50,20 @@ export default function Header({ onSearch }) {
       {locationOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setLocationOpen(false)} />
-          <div className="absolute left-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-2xl border border-black/5 bg-white py-1 text-dark shadow-xl">
-            <div className="px-4 py-2 text-[10px] font-semibold uppercase tracking-widest text-muted">Delivery areas</div>
-            {config.delivery.areas.map((area) => (
-              <button
-                key={area}
-                onClick={() => {
-                  setSelectedArea(area);
-                  setLocationOpen(false);
-                }}
-                className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-cream ${selectedArea === area ? 'font-semibold text-dark' : 'text-muted'}`}
-              >
-                {area}
-              </button>
-            ))}
+          <div className="absolute left-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
+            <DeliveryLocationPicker
+              id="header-delivery-area"
+              value={deliveryLocation.area}
+              coordinates={deliveryLocation.coordinates}
+              areas={config.delivery.areas}
+              onChange={(area) => onDeliveryLocationChange({ ...deliveryLocation, area })}
+              onCoordinatesChange={(coordinates) =>
+                onDeliveryLocationChange({ ...deliveryLocation, coordinates })
+              }
+            />
+            <p className="mt-2 text-xs text-muted">
+              GPS saves a pin only. Enter your area and full address at checkout.
+            </p>
           </div>
         </>
       )}

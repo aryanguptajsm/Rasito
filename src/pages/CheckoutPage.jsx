@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { configService, whatsappService, orderService } from '../services/dataService';
+import DeliveryLocationPicker from '../components/DeliveryLocationPicker';
 import config from '../data/config';
 
 function InputField({
@@ -81,7 +82,7 @@ function InputField({
   );
 }
 
-export default function CheckoutPage() {
+export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChange }) {
   const { items, itemCount, subtotal, clearCart } = useCart();
   const navigate = useNavigate();
 
@@ -93,7 +94,6 @@ export default function CheckoutPage() {
   const [form, setForm] = useState({
     name: '',
     phone: '',
-    village: '',
     address: '',
     landmark: '',
     instructions: '',
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
     } else if (!/^[6-9]\d{9}$/.test(form.phone.trim())) {
       errs.phone = 'Enter a valid 10-digit Indian mobile number';
     }
-    if (!form.village.trim()) errs.village = 'Village/locality is required';
+    if (!deliveryLocation.area.trim()) errs.village = 'Village/locality is required';
     if (!form.address.trim()) errs.address = 'Delivery address is required';
     return errs;
   };
@@ -218,13 +218,14 @@ export default function CheckoutPage() {
         customer: {
           name: form.name,
           phone: form.phone,
-          village: form.village,
+          village: deliveryLocation.area,
           address: form.address,
           landmark: form.landmark,
           instructions: form.instructions,
           paymentMethod: form.paymentMethod,
           orderNotes: form.orderNotes,
           deliveryDate: form.deliveryDate,
+          locationCoordinates: deliveryLocation.coordinates,
         },
       });
 
@@ -308,33 +309,20 @@ export default function CheckoutPage() {
                 <MapPin size={16} className="text-terracotta" />
                 Delivery Address
               </h2>
-              <div>
-                <label className="block text-sm font-medium text-dark mb-1.5">
-                  Village / Locality <span className="text-terracotta">*</span>
-                </label>
-                <select
-                  value={form.village}
-                  onChange={handleChange('village')}
-                  className={`w-full px-3 py-2.5 border rounded-xl text-sm text-dark bg-white appearance-none focus:outline-none focus:ring-2 transition-all ${
-                    errors.village
-                      ? 'border-red-300 focus:ring-red-200'
-                      : 'border-peach/30 focus:ring-terracotta/20 focus:border-terracotta/50'
-                  }`}
-                >
-                  <option value="">Select your area</option>
-                  {deliveryAreas.map((area) => (
-                    <option key={area} value={area}>
-                      {area}
-                    </option>
-                  ))}
-                </select>
-                {errors.village && (
-                  <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-                    <AlertCircle size={12} />
-                    {errors.village}
-                  </p>
-                )}
-              </div>
+              <DeliveryLocationPicker
+                id="checkout-delivery-area"
+                value={deliveryLocation.area}
+                coordinates={deliveryLocation.coordinates}
+                areas={deliveryAreas}
+                error={errors.village}
+                onChange={(area) => {
+                  onDeliveryLocationChange({ ...deliveryLocation, area });
+                  if (errors.village) setErrors((currentErrors) => ({ ...currentErrors, village: null }));
+                }}
+                onCoordinatesChange={(coordinates) =>
+                  onDeliveryLocationChange({ ...deliveryLocation, coordinates })
+                }
+              />
               <InputField
                 icon={Home}
                 label="Full Address"
