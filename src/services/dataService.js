@@ -105,37 +105,32 @@ export const whatsappService = {
   isConfigured: () => Boolean(config.whatsappNumber && config.whatsappNumber.trim()),
 
   /**
-   * Generate a readable WhatsApp order message
+   * Generate a concise WhatsApp order message
    * @param {Object} params - { items, subtotal, deliveryFee, total, customer }
    */
   generateMessage: ({ items, subtotal, deliveryFee, total, customer }) => {
     const lines = [
-      `🧁 *New Order — ${config.businessName}*`,
+      `*Order Request — ${config.businessName}*`,
       '',
-      `📋 *Order Items:*`,
-      ...items.map(
-        (item, i) =>
-          `${i + 1}. ${item.name} × ${item.quantity} — ₹${item.price * item.quantity}`
+      '*Items*',
+      ...items.map((item) =>
+        `- ${item.name} × ${item.quantity} — ₹${item.price * item.quantity}`
       ),
       '',
-      `💰 Subtotal: ₹${subtotal}`,
-      deliveryFee > 0 ? `🚚 Delivery Fee: ₹${deliveryFee}` : '🚚 Delivery: FREE',
-      `*💵 Total: ₹${total}*`,
+      `Subtotal: ₹${subtotal}`,
+      `Delivery: ${deliveryFee > 0 ? `₹${deliveryFee}` : 'Free'}`,
+      `*Total: ₹${total}*`,
       '',
-      `👤 *Customer Details:*`,
+      '*Customer*',
       `Name: ${customer.name}`,
       `Phone: ${customer.phone}`,
       `Village: ${customer.village}`,
       `Address: ${customer.address}`,
       customer.landmark ? `Landmark: ${customer.landmark}` : '',
-      customer.instructions ? `Instructions: ${customer.instructions}` : '',
+      customer.instructions ? `Delivery instructions: ${customer.instructions}` : '',
       customer.paymentMethod ? `Payment: ${customer.paymentMethod}` : '',
-      customer.orderNotes ? `Notes: ${customer.orderNotes}` : '',
-      customer.deliveryDate ? `🗓 Preferred Delivery: ${customer.deliveryDate}` : '',
-      '',
-      `⏰ Sent at: ${new Date().toLocaleString('en-IN')}`,
-      '',
-      `_${config.orderConfirmationNote}_`,
+      customer.deliveryDate ? `Preferred delivery date: ${customer.deliveryDate}` : '',
+      customer.orderNotes ? `Order notes: ${customer.orderNotes}` : '',
     ].filter(Boolean);
 
     return lines.join('\n');
