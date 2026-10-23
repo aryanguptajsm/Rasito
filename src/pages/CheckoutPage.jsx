@@ -322,12 +322,10 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
                 error={errors.village}
                 required
                 onChange={(area) => {
-                  onDeliveryLocationChange({ ...deliveryLocation, area });
+                  onDeliveryLocationChange({ area });
                   if (errors.village) setErrors((currentErrors) => ({ ...currentErrors, village: null }));
                 }}
-                onCoordinatesChange={(coordinates) =>
-                  onDeliveryLocationChange({ ...deliveryLocation, coordinates })
-                }
+                onCoordinatesChange={(coordinates) => onDeliveryLocationChange({ coordinates })}
               />
               <InputField
                 icon={Home}

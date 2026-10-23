@@ -18,6 +18,9 @@ function AppLayout() {
   const [deliveryLocation, setDeliveryLocation] = useState({ area: '', coordinates: '' });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  const updateDeliveryLocation = (changes) => {
+    setDeliveryLocation((currentLocation) => ({ ...currentLocation, ...changes }));
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
@@ -25,7 +28,7 @@ function AppLayout() {
         <Header
           onSearch={setSearchQuery}
           deliveryLocation={deliveryLocation}
-          onDeliveryLocationChange={setDeliveryLocation}
+          onDeliveryLocationChange={updateDeliveryLocation}
         />
       )}
 
@@ -40,7 +43,7 @@ function AppLayout() {
             element={
               <CheckoutPage
                 deliveryLocation={deliveryLocation}
-                onDeliveryLocationChange={setDeliveryLocation}
+                onDeliveryLocationChange={updateDeliveryLocation}
               />
             }
           />
