@@ -3,12 +3,14 @@ import { LocateFixed, MapPin, X } from 'lucide-react';
 
 export default function DeliveryLocationPicker({
   id,
+  label = 'Delivery area',
   value,
   coordinates,
   areas,
   onChange,
   onCoordinatesChange,
   error,
+  required = false,
 }) {
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState('');
@@ -27,9 +29,9 @@ export default function DeliveryLocationPicker({
         setLocating(false);
       },
       (geoError) => {
-        const message = geoError.code === geoError.PERMISSION_DENIED
+        const message = geoError.code === 1
           ? 'Location permission was denied. You can still enter your area above.'
-          : geoError.code === geoError.POSITION_UNAVAILABLE
+          : geoError.code === 2
             ? 'Your location could not be determined. Please enter your area above.'
             : 'Location timed out. Please try again or enter your area above.';
         setLocationError(message);
@@ -42,7 +44,7 @@ export default function DeliveryLocationPicker({
   return (
     <div data-error={!!error}>
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-dark">
-        Delivery area {error && <span className="text-terracotta">*</span>}
+        {label} {required && <span className="text-terracotta">*</span>}
       </label>
       <div className="relative">
         <MapPin
@@ -79,6 +81,7 @@ export default function DeliveryLocationPicker({
         type="button"
         onClick={useCurrentLocation}
         disabled={locating}
+        aria-live="polite"
         className="mt-2 inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-terracotta/40 bg-terracotta/10 px-3 py-2 text-sm font-semibold text-dark transition-colors hover:bg-terracotta/20 disabled:cursor-wait disabled:opacity-60"
       >
         <LocateFixed size={16} className={locating ? 'animate-pulse' : ''} />

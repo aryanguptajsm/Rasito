@@ -201,7 +201,11 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
         subtotal,
         deliveryFee,
         total,
-        customer: form,
+        customer: {
+          ...form,
+          village: deliveryLocation.area,
+          locationCoordinates: deliveryLocation.coordinates,
+        },
       });
 
       // Save order locally
@@ -311,10 +315,12 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
               </h2>
               <DeliveryLocationPicker
                 id="checkout-delivery-area"
+                label="Village / Locality"
                 value={deliveryLocation.area}
                 coordinates={deliveryLocation.coordinates}
                 areas={deliveryAreas}
                 error={errors.village}
+                required
                 onChange={(area) => {
                   onDeliveryLocationChange({ ...deliveryLocation, area });
                   if (errors.village) setErrors((currentErrors) => ({ ...currentErrors, village: null }));
