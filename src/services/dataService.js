@@ -98,7 +98,7 @@ export const orderService = {
   },
 };
 
-// ─── WhatsApp Service ──────────────────────────────────────
+// ─── WhatsApp Service ───────────────────────────────────
 
 export const whatsappService = {
   /** Check if WhatsApp number is configured */

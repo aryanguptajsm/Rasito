@@ -87,6 +87,9 @@ export default function DeliveryLocationPicker({
         <LocateFixed size={16} className={locating ? 'animate-pulse' : ''} />
         {locating ? 'Finding location…' : 'Use my current location'}
       </button>
+      <p className="mt-1.5 text-xs text-muted">
+        GPS coordinates are included with your WhatsApp order. Enter your street address separately.
+      </p>
 
       {coordinates && (
         <div className="mt-2 flex items-center justify-between gap-3 rounded-lg bg-cream px-3 py-2 text-xs text-muted">

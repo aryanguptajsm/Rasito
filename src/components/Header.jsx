@@ -59,9 +59,6 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
               onChange={(area) => onDeliveryLocationChange({ area })}
               onCoordinatesChange={(coordinates) => onDeliveryLocationChange({ coordinates })}
             />
-            <p className="mt-2 text-xs text-muted">
-              GPS saves a pin only. Enter your area and full address at checkout.
-            </p>
           </div>
         </>
       )}
