@@ -1,23 +1,14 @@
 # Rasito
 
-Rasito is a local bakery ordering website built with React and Vite.
+Rasito is a local bakery ordering website for discovering and ordering fresh bakery treats.
 
-## Getting Started
+## What You Can Do
 
-Install dependencies:
+- Browse bakery products by category and search the menu.
+- View product details and add items to your cart.
+- Enter delivery details and choose a payment option at checkout.
+- Send an order request to the bakery through WhatsApp.
 
-```bash
-npm install
-```
+## Ordering
 
-Start the development server:
-
-```bash
-npm run dev
-```
-
-## Available Scripts
-
-- `npm run dev` starts the development server.
-- `npm run build` creates a production build.
-- `npm run preview` previews the production build locally.
+Orders sent through WhatsApp are requests. The bakery reviews availability and confirms the order directly with the customer.
