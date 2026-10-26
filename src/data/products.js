@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * GAONBITES — CENTRAL PRODUCT DATA (SAMPLE / DEMO)
+ * RASITO — CENTRAL PRODUCT DATA (SAMPLE / DEMO)
  * ============================================================
  * All product names, prices, images, categories, and availability
  * are editable from this single file.

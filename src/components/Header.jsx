@@ -127,9 +127,9 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
   return (
     <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
-        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="GaonBites home">
+        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Rasito home">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-base">🥐</span>
-          <span className="text-base font-bold tracking-tight text-dark sm:text-lg">GaonBites</span>
+          <span className="text-base font-bold tracking-tight text-dark sm:text-lg">Rasito</span>
         </Link>
         <div className="hidden sm:block">{areaPicker}</div>
         <form onSubmit={handleSearchSubmit} className="hidden max-w-md flex-1 items-center md:flex">

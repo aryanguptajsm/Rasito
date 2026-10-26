@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * GAONBITES — SERVICE LAYER
+ * RASITO — SERVICE LAYER
  * ============================================================
  * Abstraction layer for data access.
  * Currently uses local mock data from /data/products.js.
