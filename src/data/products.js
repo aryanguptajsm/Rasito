@@ -150,7 +150,7 @@ export const PRODUCTS = [
     id: id(),
     name: 'Vanilla Cake',
     category: 'cakes',
-    price: 4,
+    price: 400,
     originalPrice: 450,
     description: 'Classic vanilla sponge cake with buttercream frosting. Simple elegance for any celebration.',
     image: '/images/vanilla-cake.jpg',
