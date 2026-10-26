@@ -161,7 +161,7 @@ export const PRODUCTS = [
   },
   {
     id: id(),
-    name: 'Choco Chip Cookies'
+    name: 'Choco Chip Cookies',
     category: 'cookies',
     price: 60,
     description: 'Loaded with real chocolate chips. Soft in the center, crisp at the edges.',
