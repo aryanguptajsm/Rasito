@@ -13,7 +13,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
   const selectedArea = deliveryLocation.area || (
-    deliveryLocation.coordinates ? 'GPS pin saved' : 'Select your village'
+    deliveryLocation.coordinates ? 'Location selected' : 'Select your village'
   );
 
   const handleSearch = (event) => {
