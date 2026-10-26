@@ -85,14 +85,20 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
       <header className="relative z-40 overflow-visible rounded-b-[28px] bg-[#11120f] text-white shadow-sm sm:rounded-b-[32px]">
         <div className="mx-auto max-w-7xl px-5 pb-6 pt-3 sm:px-8 sm:pb-8 sm:pt-5 lg:px-10">
           <div className="flex items-center justify-between gap-4">
-            {areaPicker}
+            <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Rasito home">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
+              <span className="text-lg font-bold tracking-tight text-white">Rasito</span>
+            </Link>
             <div className="flex items-center gap-2">
+              <div className="hidden sm:block">{areaPicker}</div>
               {cartAction}
             </div>
           </div>
 
-          <div className="mt-6 sm:mt-8">
-            <p className="mb-1 text-xs font-medium text-white/55">{config.businessName}</p>
+          <div className="mt-3 sm:hidden">{areaPicker}</div>
+
+          <div className="mt-5 sm:mt-8">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wide text-white/55">Local bakery, at your door</p>
             <h1 className="max-w-xl text-[25px] font-semibold leading-[1.15] tracking-[-0.035em] sm:text-3xl lg:text-4xl">
               What are you going to eat today?
             </h1>
@@ -128,7 +134,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
     <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Rasito home">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-white">R</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
           <span className="text-base font-bold tracking-tight text-dark sm:text-lg">Rasito</span>
         </Link>
         <div className="hidden sm:block">{areaPicker}</div>

@@ -1,103 +1,97 @@
 import { Link } from 'react-router-dom';
-import { Phone, Clock, MapPin, Mail, ChevronRight } from 'lucide-react';
+import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone, Truck } from 'lucide-react';
 import config from '../data/config';
 
 export default function Footer() {
   return (
-    <footer className="bg-chocolate text-white/80 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">🧁</span>
-              <span className="font-bold text-xl text-white">
-                Gaon<span className="text-terracotta">Bites</span>
-              </span>
-            </div>
-            <p className="text-sm text-white/60 leading-relaxed max-w-xs">
-              Your village bakery, now just a tap away. Fresh cakes, pastries, patties and more
-              delivered to your doorstep.
+    <footer className="mt-auto border-t-4 border-terracotta bg-chocolate text-white/75">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <div className="footer-reveal grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <section className="footer-column">
+            <Link to="/" className="mb-4 flex w-fit items-center gap-2" aria-label="Rasito home">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
+              <span className="text-xl font-bold tracking-tight text-white">Rasito</span>
+            </Link>
+            <p className="max-w-xs text-sm leading-relaxed text-white/60">
+              Cakes, pastries, patties, and more from local bakery suppliers, delivered to your door.
             </p>
-          </div>
+            <Link to="/menu" className="footer-link mt-5 inline-flex items-center gap-1 text-sm font-semibold text-terracotta">
+              Explore the menu <ArrowUpRight size={15} />
+            </Link>
+          </section>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-3">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
+          <section className="footer-column">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Explore</h2>
+            <ul className="space-y-3">
               {[
-                { to: '/menu', label: 'Full Menu' },
-                { to: '/cart', label: 'My Cart' },
-                { to: '/orders', label: 'My Orders' },
+                { to: '/menu', label: 'Browse the menu' },
+                { to: '/cart', label: 'Shopping cart' },
+                { to: '/orders', label: 'Order history' },
               ].map(({ to, label }) => (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    className="text-sm text-white/60 hover:text-terracotta transition-colors flex items-center gap-1"
-                  >
-                    <ChevronRight size={12} />
-                    {label}
-                  </Link>
+                  <Link to={to} className="footer-link inline-flex items-center text-sm text-white/60">{label}</Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-3">
-              Contact
-            </h3>
-            <ul className="space-y-2 text-sm text-white/60">
+          <section className="footer-column">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Delivery</h2>
+            <ul className="space-y-3 text-sm text-white/60">
               <li className="flex items-start gap-2">
-                <Clock size={14} className="mt-0.5 shrink-0" />
-                <div>
-                  <p>Weekdays: {config.openingHours.weekdays}</p>
-                  <p>Weekends: {config.openingHours.weekends}</p>
-                </div>
+                <MapPin size={15} className="mt-0.5 shrink-0 text-terracotta" />
+                <span>{config.delivery.areas.join(' · ')}</span>
               </li>
-              <li className="flex items-center gap-2">
-                <MapPin size={14} className="shrink-0" />
-                <span>Local delivery in village area</span>
+              <li className="flex items-start gap-2">
+                <Truck size={15} className="mt-0.5 shrink-0 text-terracotta" />
+                <span>{config.delivery.estimatedTime} estimated delivery</span>
+              </li>
+              <li className="pl-[23px]">
+                {config.delivery.fee === 0 ? 'Free delivery' : `Delivery fee ₹${config.delivery.fee}`}
+                {config.delivery.freeAbove && ` · Free above ₹${config.delivery.freeAbove}`}
+              </li>
+              <li className="pl-[23px]">
+                {config.paymentOptions.filter((option) => option.enabled).map((option) => option.label).join(' · ')}
               </li>
             </ul>
-          </div>
+          </section>
 
-          {/* Policies */}
-          <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-3">
-              Info
-            </h3>
-            <ul className="space-y-2">
-              {[
-                { label: 'Delivery Info', href: '#delivery-info' },
-                { label: 'Cancellation Policy', href: '#cancellation' },
-                { label: 'Privacy', href: '#privacy' },
-              ].map(({ label, href }) => (
-                <li key={href}>
+          <section className="footer-column">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Contact & hours</h2>
+            <ul className="space-y-3 text-sm text-white/60">
+              <li className="flex items-start gap-2">
+                <Clock size={15} className="mt-0.5 shrink-0 text-terracotta" />
+                <span>Weekdays {config.openingHours.weekdays}<br />Weekends {config.openingHours.weekends}</span>
+              </li>
+              <li>
+                <a className="footer-link inline-flex items-center gap-2" href={`tel:${config.contactPhone}`}>
+                  <Phone size={15} className="shrink-0 text-terracotta" />
+                  {config.contactPhone}
+                </a>
+              </li>
+              {config.whatsappNumber && (
+                <li>
                   <a
-                    href={href}
-                    className="text-sm text-white/60 hover:text-terracotta transition-colors flex items-center gap-1"
+                    className="footer-link inline-flex items-center gap-2"
+                    href={`https://wa.me/${config.whatsappNumber}`}
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    <ChevronRight size={12} />
-                    {label}
+                    <MessageCircle size={15} className="shrink-0 text-terracotta" />
+                    Message us on WhatsApp
                   </a>
                 </li>
-              ))}
+              )}
             </ul>
-          </div>
+          </section>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} {config.businessName}. Made with ❤️ for local bakeries.
-          </p>
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {config.businessName}. Local bakery ordering made easy.</p>
+          <p>{config.orderConfirmationNote}</p>
           {config.isDemoMode && (
-            <span className="text-[10px] text-terracotta/80 bg-terracotta/10 px-2 py-1 rounded-full font-medium">
-              ⚠️ Demo Mode — Sample data
+            <span className="w-fit rounded-full bg-white/5 px-2.5 py-1 font-medium text-white/55">
+              Demo · Sample data
             </span>
           )}
         </div>
