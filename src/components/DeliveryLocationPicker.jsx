@@ -7,16 +7,17 @@ const MAX_MERCATOR_LATITUDE = 85.05112878;
 
 function getAreaName(result) {
   const address = result.address || {};
-  const primary =
-    address.suburb || address.neighbourhood || address.village || address.town ||
-    address.city_district || address.city || address.municipality || address.county ||
-    address.state_district || address.state;
-  const secondary =
-    address.city || address.town || address.village || address.municipality ||
-    address.state_district || address.state;
-  const names = [primary, secondary].filter((name, index, all) => name && all.indexOf(name) === index);
+  const village = address.village || address.hamlet || address.isolated_dwelling;
+  const locality =
+    address.suburb || address.neighbourhood || address.quarter || address.locality ||
+    address.town || address.city_district || address.municipality || address.city;
+  const district = address.county || address.state_district;
+  const names = [village, locality, district]
+    .filter((name, index, all) => name && all.indexOf(name) === index);
 
-  return names.length > 0 ? names.slice(0, 2).join(', ') : (result.display_name || '').split(',').slice(0, 2).join(',').trim();
+  return names.length > 0
+    ? names.join(', ')
+    : (result.display_name || '').split(',').slice(0, 3).map((part) => part.trim()).filter(Boolean).join(', ');
 }
 
 function coordinatesToWorld({ lat, lon }, zoom) {
