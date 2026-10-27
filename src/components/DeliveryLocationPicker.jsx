@@ -277,7 +277,7 @@ export default function DeliveryLocationPicker({
           aria-expanded={suggestions.length > 0 || matchingAreas.length > 0}
           aria-controls={`${id}-suggestions`}
           value={searchText}
-          onChange={(event) => handleSearchChange(event, true)}
+          onChange={handleSearchChange}
           onFocus={() => setLocationError('')}
           placeholder="Type your village, town or area"
           autoComplete="address-level2"
@@ -401,7 +401,7 @@ export default function DeliveryLocationPicker({
                 <input
                   type="search"
                   value={searchText}
-                  onChange={handleSearchChange}
+                  onChange={(event) => handleSearchChange(event, true)}
                   placeholder="Search by area, name, street"
                   aria-label="Search for a place on the map"
                   className="w-full rounded-2xl border border-black/5 bg-white py-3.5 pl-11 pr-4 text-sm text-dark shadow-lg outline-none transition focus:border-terracotta/50 focus:ring-2 focus:ring-terracotta/20"
