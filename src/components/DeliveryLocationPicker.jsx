@@ -205,7 +205,7 @@ export default function DeliveryLocationPicker({
         setLocationError(message);
         setLocating(false);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
     );
   };
 
