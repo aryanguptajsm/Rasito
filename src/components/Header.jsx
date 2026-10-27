@@ -154,6 +154,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
           <div className="flex items-center gap-2">
             {cartAction}
           </div>
+        </div>
         <div className="pb-2 sm:hidden">
           {areaPicker}
         </div>
