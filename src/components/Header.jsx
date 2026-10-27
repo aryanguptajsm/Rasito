@@ -32,25 +32,25 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
     <div className="relative">
       <button
         onClick={() => setLocationOpen(!locationOpen)}
-        className={`flex items-center gap-2 rounded-full transition-colors ${isHome ? 'text-white hover:bg-white/10' : 'text-muted hover:bg-cream'} ${isHome ? 'px-0 py-1' : 'px-2 py-1.5'}`}
+        className={`flex max-w-full items-center gap-2 rounded-full transition-colors ${isHome ? 'text-white hover:bg-white/10' : 'w-full justify-start text-muted hover:bg-cream sm:w-auto'} ${isHome ? 'px-0 py-1' : 'px-2 py-1.5'}`}
         aria-label="Select delivery location"
         aria-expanded={locationOpen}
       >
-        <span className={`flex h-9 w-9 items-center justify-center rounded-full ${isHome ? 'bg-white/10' : 'bg-cream'}`}>
+        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${isHome ? 'bg-white/10' : 'bg-cream'}`}>
           <MapPin size={17} className={isHome ? 'text-terracotta' : 'text-terracotta'} />
         </span>
-        <span className="text-left leading-tight">
+        <span className="min-w-0 flex-1 text-left leading-tight">
           <span className={`block text-[10px] ${isHome ? 'text-white/55' : 'text-muted'}`}>Delivery location</span>
-          <span className={`flex items-center gap-1 text-xs font-semibold ${isHome ? 'text-white' : 'text-dark'}`}>
-            {selectedArea}
-            <ChevronDown size={12} />
+          <span className={`flex min-w-0 items-center gap-1 text-xs font-semibold ${isHome ? 'text-white' : 'text-dark'}`}>
+            <span className="min-w-0 truncate">{selectedArea}</span>
+            <ChevronDown size={12} className="shrink-0" />
           </span>
         </span>
       </button>
       {locationOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setLocationOpen(false)} />
-          <div className="absolute left-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
+          <div className="absolute left-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
             <DeliveryLocationPicker
               id="header-delivery-area"
               value={deliveryLocation.area}
@@ -132,26 +132,30 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
 
   return (
     <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
-        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Rasito home">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
-          <span className="text-base font-bold tracking-tight text-dark sm:text-lg">Rasito</span>
-        </Link>
-        <div className="hidden sm:block">{areaPicker}</div>
-        <form onSubmit={handleSearchSubmit} className="hidden max-w-md flex-1 items-center md:flex">
-          <div className="relative w-full">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={handleSearch}
-              placeholder="Search the menu..."
-              className="w-full rounded-full border border-black/5 bg-white py-2.5 pl-9 pr-4 text-sm text-dark outline-none transition focus:border-terracotta/60 focus:ring-2 focus:ring-terracotta/20"
-            />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 items-center justify-between gap-3 sm:h-16">
+          <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Rasito home">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
+            <span className="text-base font-bold tracking-tight text-dark sm:text-lg">Rasito</span>
+          </Link>
+          <div className="hidden sm:block">{areaPicker}</div>
+          <form onSubmit={handleSearchSubmit} className="hidden max-w-md flex-1 items-center md:flex">
+            <div className="relative w-full">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={handleSearch}
+                placeholder="Search the menu..."
+                className="w-full rounded-full border border-black/5 bg-white py-2.5 pl-9 pr-4 text-sm text-dark outline-none transition focus:border-terracotta/60 focus:ring-2 focus:ring-terracotta/20"
+              />
+            </div>
+          </form>
+          <div className="flex items-center gap-2">
+            {cartAction}
           </div>
-        </form>
-        <div className="flex items-center gap-2">
-          {cartAction}
+        <div className="pb-2 sm:hidden">
+          {areaPicker}
         </div>
       </div>
     </header>
