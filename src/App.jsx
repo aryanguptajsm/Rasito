@@ -11,7 +11,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrdersPage from './pages/OrdersPage';
-import AdminPage from './pages/AdminPage'
+import AdminPage from './pages/AdminPage';
 
 function AppLayout() {
   const [searchQuery, setSearchQuery] = useState('');
