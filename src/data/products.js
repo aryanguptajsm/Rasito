@@ -220,7 +220,7 @@ export const PRODUCTS = [
     name: 'Chocolete mocha cake ',
     category: 'cakes',
     price: 480,
-    description: 'Rich Chocalate with caramel drizzle and crunchy praline topping.',
+    description: 'Rich Chocalate with crunchy chocochips filled in bread and praline topping.',
     image: '/public/Chocoletemocha.png',
     available: true,
     isVeg: true,
