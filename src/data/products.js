@@ -201,7 +201,7 @@ export const PRODUCTS = [
     description: 'Crispy, golden samosa filled with spiced potato and peas. A timeless classic.',
     image: '/images/samosa.jpg',
     available: true,
-    isVeg: true,
+    isVeg: false,
     isBestseller: true,
   },
   {
