@@ -198,10 +198,10 @@ export const PRODUCTS = [
     name: 'Samosa',
     category: 'snacks',
     price: 15,
-    description: 'Crispy, golden samosa filled with spiced potato and peas. A timeless classic.',
+    description: 'Crispy, golden samosa filled with spiced potato and paneer, onion, peas. A timeless classic.',
     image: '/images/samosa.jpg',
     available: true,
-    isVeg: false,
+    isVeg: ture,
     isBestseller: true,
   },
   {
