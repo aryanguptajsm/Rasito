@@ -27,7 +27,7 @@ let _nextId = 1;
 const id = () => String(_nextId++);
 
 /**
- * Each product follows this shap
+ * Each product follows this shape
  * {
  *   id: string,
  *   name: string,
