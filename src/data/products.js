@@ -188,7 +188,7 @@ export const PRODUCTS = [
     price: 550,
     description: 'Stunning red velvet layers with cream cheese frosting. A showstopper for special moments.',
     image: '/images/red-velvet-cake.jpg',
-    available: true,
+    available: false,
     isVeg: true,
     isBestseller: false,
     isPreOrder: true,
