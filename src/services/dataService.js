@@ -139,7 +139,7 @@ export const whatsappService = {
     return lines.join('\n');
   },
 
-  /** Open WhatsApp with prefilled message */
+  /** Open WhatsApp with prefilled message *
   openWhatsApp: (message) => {
     if (!whatsappService.isConfigured()) {
       return {
