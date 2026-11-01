@@ -105,7 +105,7 @@ export const whatsappService = {
   isConfigured: () => Boolean(config.whatsappNumber && config.whatsappNumber.trim()),
 
   /**
-   * Generate a concise WhatsApp order message
+   * Generate a concise WhatsApp order messag
    * @param {Object} params - { items, subtotal, deliveryFee, total, customer }
    */
   generateMessage: ({ items, subtotal, deliveryFee, total, customer }) => {
