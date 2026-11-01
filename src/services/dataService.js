@@ -154,7 +154,7 @@ export const whatsappService = {
   },
 };
 
-// ─── Config Service ───────────────────────────────────
+// ─── Config Service ─────────────────────────────────
 
 export const configService = {
   getConfig: () => Promise.resolve({ ...config }),
