@@ -1,6 +1,6 @@
 # Rasito
 
-Rasito is a local bakery ordering brand  for discovering and ordering fresh bakery treats.
+Rasito is a local bakery ordering website for discovering and ordering fresh bakery treats.
 
 ## What You Can Do
 
