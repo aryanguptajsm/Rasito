@@ -11,4 +11,4 @@ Rasito is a local bakery ordering website for discovering and ordering fresh bak
 
 ## Ordering
 
-Orders sent through WhatsApp are requests. The bakery reviews availability and confirms the order directly with the customer.
+Orders sent through WhatsApp are requests The bakery reviews availability and confirms the order directly with the customer.
