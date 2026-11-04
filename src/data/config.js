@@ -37,7 +37,7 @@ const config = {
     /** Minimum order amount (set 0 to disable) */
     minimumOrder: 0,
     /** Estimated delivery window text */
-    estimatedTime: '30–60 minutes',
+    estimatedTime: '60–90 minutes',
     /** Service areas */
     areas: [
       'Village Centre',
