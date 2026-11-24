@@ -26,6 +26,55 @@ export const CATEGORIES = [
 let _nextId = 1;
 const id = () => String(_nextId++);
 
+const CAKE_ASSETS = [
+  { name: 'Blue and White Rose Cake', price: 250, folder: '250rs cake', file: 'Blue and White Rose Cake.png' },
+  { name: 'Elegant Red-Trimmed Floral Cake on Cream Background', price: 250, folder: '250rs cake', file: 'Elegant Red-Trimmed Floral Cake on Cream Background.png' },
+  { name: 'Elegant Yellow-Piped Rose Celebration Cake', price: 250, folder: '250rs cake', file: 'Elegant Yellow-Piped Rose Celebration Cake.png' },
+  { name: 'Pastel Rose Celebration Cake', price: 250, folder: '250rs cake', file: 'Pastel Rose Celebration Cake.png' },
+  { name: 'Pastel Yellow Rose Cake with Cherry Accents', price: 250, folder: '250rs cake', file: 'Pastel Yellow Rose Cake with Cherry Accents.png' },
+  { name: 'Bright Yellow Drip Cake with Floral Icing', price: 300, folder: '300rs cake', file: 'Bright Yellow Drip Cake with Floral Icing.png' },
+  { name: 'Chocolate Swirl Cake with Cherry Accents', price: 300, folder: '300rs cake', file: 'Chocolate Swirl Cake with Cherry Accents.png' },
+  { name: 'Elegant Coffee Buttercream Rose Cake', price: 300, folder: '300rs cake', file: 'Elegant Coffee Buttercream Rose Cake.png' },
+  { name: 'Elegant Coffee Chocolate Mousse Cake', price: 300, folder: '300rs cake', file: 'Elegant Coffee Chocolate Mousse Cake.png' },
+  { name: 'Elegant Happy Anniversary Cake', price: 300, folder: '300rs cake', file: 'Elegant Happy Anniversary Cake.png' },
+  { name: 'Glossy Floral Swirl Celebration Cake', price: 300, folder: '300rs cake', file: 'Glossy Floral Swirl Celebration Cake.png' },
+  { name: 'Pastel Pink Rose Cake on Gold Board', price: 300, folder: '300rs cake', file: 'Pastel Pink Rose Cake on Gold Board.png' },
+  { name: 'Pink Rosette Cake on Gold Board', price: 300, folder: '300rs cake', file: 'Pink Rosette Cake on Gold Board.png' },
+  { name: 'Red and Orange Rosette Celebration Cake', price: 300, folder: '300rs cake', file: 'Red and Orange Rosette Celebration Cake.png' },
+  { name: 'Vibrant Pink Rose Cake', price: 300, folder: '300rs cake', file: 'Vibrant Pink Rose Cake.png' },
+  { name: 'Vibrant Red and Pink Floral Celebration Cake', price: 300, folder: '300rs cake', file: 'Vibrant Red and Pink Floral Celebration Cake.png' },
+  { name: 'Cheerful Bunny Garden Celebration Cake', price: 350, folder: '350rs cake', file: 'Cheerful Bunny Garden Celebration Cake.png' },
+  { name: 'Cherry-Topped Chocolate Drip Cake', price: 350, folder: '350rs cake', file: 'Cherry-Topped Chocolate Drip Cake.png' },
+  { name: 'Chocolate Drip Cherry Cream Cake', price: 350, folder: '350rs cake', file: 'Chocolate Drip Cherry Cream Cake.png' },
+  { name: 'Elegant Black-and-White Chocolate Rose Cake', price: 350, folder: '350rs cake', file: 'Elegant Black-and-White Chocolate Rose Cake.png' },
+  { name: 'Elegant Blue Chocolate Drip Birthday Cake', price: 350, folder: '350rs cake', file: 'Elegant Blue Chocolate Drip Birthday Cake.png' },
+  { name: 'Elegant Coffee Cream Chocolate Cake', price: 350, folder: '350rs cake', file: 'Elegant Coffee Cream Chocolate Cake.png' },
+  { name: 'Glossy Black Forest Cake with Cherry', price: 350, folder: '350rs cake', file: 'Glossy Black Forest Cake with Cherry.png' },
+  { name: 'Glossy Cherry Caramel Drip Cake', price: 350, folder: '350rs cake', file: 'Glossy Cherry Caramel Drip Cake.png' },
+  { name: 'Glossy Chocolate Rose Cake', price: 350, folder: '350rs cake', file: 'Glossy Chocolate Rose Cake.png' },
+  { name: 'Glossy Chocolate Thanksgiving Cake', price: 350, folder: '350rs cake', file: 'Glossy Chocolate Thanksgiving Cake.png' },
+  { name: 'Half-and-Half Red Velvet Celebration Cake', price: 350, folder: '350rs cake', file: 'Half-and-Half Red Velvet Celebration Cake.png' },
+  { name: 'Pink Rose Ganache Drip Cake', price: 350, folder: '350rs cake', file: 'Pink Rose Ganache Drip Cake.png' },
+  { name: 'Snowman Carnival Celebration Cake', price: 350, folder: '350rs cake', file: 'Snowman Carnival Celebration Cake.png' },
+  { name: 'Vibrant Chocolate Birthday Cake', price: 350, folder: '350rs cake', file: 'Vibrant Chocolate Birthday Cake.png' },
+  { name: 'Celebration Chocolate Cake', price: 350, folder: '350rs cake', file: 'cbcb0420-2b2d-424b-a8fe-ccadf89d83c3.jpg' },
+  { name: 'Chocolate Mocha Cake', price: 480, folder: '', file: 'Chocoletemocha.png' },
+  { name: 'Chocolate Mocha Celebration Cake', price: 480, folder: '', file: 'Chocoletemochas.png' },
+];
+
+const CAKE_PRODUCTS = CAKE_ASSETS.map((cake) => ({
+  id: id(),
+  name: cake.name,
+  category: 'cakes',
+  price: cake.price,
+  description: `${cake.name} - a freshly prepared celebration cake.`,
+  image: `/${cake.folder ? `${cake.folder}/` : ''}${cake.file}`,
+  available: true,
+  isVeg: true,
+  isBestseller: false,
+  isPreOrder: true,
+}));
+
 /**
  * Each product follows this shape
  * {
@@ -201,7 +250,7 @@ export const PRODUCTS = [
     description: 'Crispy, golden samosa filled with spiced potato and paneer, onion, peas. A timeless classic.',
     image: '/images/samosa.jpg',
     available: true,
-    isVeg: ture,
+    isVeg: true,
     isBestseller: true,
   },
   {
@@ -221,12 +270,13 @@ export const PRODUCTS = [
     category: 'cakes',
     price: 480,
     description: 'Rich Chocalate with crunchy chocochips filled in bread and praline topping.',
-    image: '/public/Chocoletemocha.png',
+    image: '/Chocoletemocha.png',
     available: true,
     isVeg: true,
     isBestseller: false,
     isPreOrder: true,
   },
+  ...CAKE_PRODUCTS,
 ];
 
 /** Helper: get products by category */
