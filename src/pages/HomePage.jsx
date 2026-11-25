@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Truck, Sprout, Smartphone, ChevronRight, Gift } from 'lucide-react';
+import { ArrowRight, Truck, Sprout, Smartphone, ChevronRight } from 'lucide-react';
 import { productService } from '../services/dataService';
 import { CATEGORIES } from '../data/products';
 import config from '../data/config';
@@ -8,13 +8,11 @@ import ProductCard from '../components/ProductCard';
 
 export default function HomePage({ searchQuery = '' }) {
   const [bestsellers, setBestsellers] = useState([]);
-  const [preOrderCakes, setPreOrderCakes] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     productService.getBestsellers().then(setBestsellers);
-    productService.getPreOrderCakes().then(setPreOrderCakes);
     productService.getAll().then(setAllProducts);
   }, []);
 
@@ -27,6 +25,9 @@ export default function HomePage({ searchQuery = '' }) {
     `${product.name} ${product.description} ${product.category}`.toLowerCase().includes(query);
   const visibleProducts = query ? allProducts.filter(matchesQuery) : allProducts;
   const visibleBestsellers = query ? bestsellers.filter(matchesQuery) : bestsellers;
+  const visibleCakes = visibleProducts.filter((product) => product.category === 'cakes');
+  const visibleTreats = visibleProducts.filter((product) => product.category !== 'cakes');
+  const fourHundredRupeeCakeCount = visibleCakes.filter((product) => product.price === 400).length;
 
   return (
     <div className="min-h-screen">
@@ -39,55 +40,71 @@ export default function HomePage({ searchQuery = '' }) {
       )}
 
       <section className="mx-auto max-w-7xl px-4 pb-2 pt-5 sm:px-6 lg:px-8">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">All Products</h2>
-            <p className="mt-0.5 text-xs text-muted sm:text-sm">{visibleProducts.length} items available</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9b6b16]">Fresh from the bakery</p>
+            <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">Today’s Offers</h2>
           </div>
-          <Link to="/menu" className="flex items-center gap-1 text-xs font-medium text-muted transition hover:text-dark">
-            View menu <ChevronRight size={14} />
+          <Link to="/menu" className="text-xs font-medium text-muted transition hover:text-dark">See all</Link>
+        </div>
+        <div className="relative flex min-h-[164px] items-center justify-between overflow-hidden rounded-[28px] border border-[#f1dfc4] bg-gradient-to-br from-[#fff8e9] via-white to-[#fff0ee] p-4 shadow-sm sm:min-h-[190px] sm:px-7">
+          <div className="relative z-10 max-w-[66%]">
+            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[#9b6b16] shadow-sm">
+              <Truck size={13} />
+              Today’s special
+            </div>
+            <h3 className="text-xl font-extrabold tracking-tight text-dark sm:text-2xl">A little treat, on us!</h3>
+            <p className="mt-1 max-w-sm text-[11px] leading-relaxed text-muted sm:text-sm">
+              {config.delivery.freeAbove
+                ? `Get free delivery on orders of ₹${config.delivery.freeAbove} or more. Happy cravings!`
+                : 'Fresh bakery treats delivered to your door'}
+            </p>
+            <Link to="/menu" className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#24211e] px-4 py-2 text-[11px] font-semibold text-white transition hover:bg-[#40352e]">
+              Explore treats <ArrowRight size={13} />
+            </Link>
+          </div>
+          <div className="pointer-events-none absolute -right-1 bottom-0 h-full w-[40%]" aria-hidden="true">
+            <span className="absolute right-[25%] top-[12%] flex h-14 w-14 rotate-[-10deg] items-center justify-center rounded-[18px] border-2 border-white bg-[#ffe1da] text-3xl shadow-md sm:h-[68px] sm:w-[68px] sm:text-4xl">🍕</span>
+            <span className="absolute right-[8%] top-[42%] flex h-16 w-16 rotate-[9deg] items-center justify-center rounded-full border-2 border-white bg-[#fff0b8] text-4xl shadow-md sm:h-[76px] sm:w-[76px] sm:text-5xl">🎂</span>
+            <span className="absolute bottom-[8%] right-[46%] flex h-12 w-12 rotate-[8deg] items-center justify-center rounded-[16px] border-2 border-white bg-[#e8f0d7] text-2xl shadow-md sm:h-14 sm:w-14 sm:text-3xl">🥐</span>
+            <span className="absolute right-[48%] top-[18%] text-xl sm:text-2xl">🍪</span>
+            <span className="absolute bottom-[7%] right-[2%] text-xl sm:text-2xl">✨</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-3 pt-5 sm:px-6 lg:px-8">
+        <div className="mb-4 flex items-end justify-between gap-3">
+          <div>
+            <div className="mb-1 flex items-center gap-2">
+              <span className="text-xl" aria-hidden="true">🎂</span>
+              <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">All Cakes</h2>
+            </div>
+            <p className="text-xs text-muted sm:text-sm">
+              {visibleCakes.length} celebration-ready cakes{fourHundredRupeeCakeCount > 0 ? ` · ${fourHundredRupeeCakeCount} at ₹400` : ''}
+            </p>
+          </div>
+          <Link to="/menu?category=cakes" className="flex shrink-0 items-center gap-1 text-xs font-semibold text-[#9b6b16] transition hover:text-dark">
+            Browse cakes <ChevronRight size={14} />
           </Link>
         </div>
-        {visibleProducts.length > 0 ? (
+        {visibleCakes.length > 0 ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            {visibleProducts.map((product) => (
+            {visibleCakes.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <p className="rounded-2xl bg-white p-5 text-center text-sm text-muted">No bakery treats match “{searchQuery}”.</p>
+          <p className="rounded-2xl bg-white p-5 text-center text-sm text-muted">No cakes match “{searchQuery}”.</p>
         )}
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 pb-2 pt-5 sm:px-6 lg:px-8">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">Today's Offer!</h2>
-          <Link to="/menu" className="text-xs font-medium text-muted transition hover:text-dark">See all</Link>
-        </div>
-        <div className="relative flex min-h-[132px] items-center justify-between overflow-hidden rounded-[24px] bg-white p-4 shadow-sm sm:min-h-[160px] sm:px-6">
-          <div className="relative z-10 max-w-[65%]">
-            <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-terracotta/25 text-dark">
-              <Truck size={17} />
-            </div>
-            <h3 className="text-base font-bold text-dark sm:text-lg">Free Delivery</h3>
-            <p className="mt-1 text-[11px] leading-relaxed text-muted sm:text-sm">
-              {config.delivery.freeAbove
-                ? `Free on orders of ₹${config.delivery.freeAbove} or more · ₹${config.delivery.fee} below`
-                : 'Fresh bakery treats delivered to your door'}
-            </p>
-            <Link to="/menu" className="mt-3 inline-flex items-center gap-1 rounded-full bg-terracotta px-4 py-2 text-[11px] font-semibold text-dark transition hover:brightness-95">
-              Order now <ArrowRight size={13} />
-            </Link>
-          </div>
-          <div className="absolute -bottom-8 -right-3 flex h-36 w-36 items-center justify-center rounded-full bg-[#fff4c5] sm:right-6 sm:h-40 sm:w-40">
-            <span className="text-6xl sm:text-7xl" aria-hidden="true">🥐</span>
-          </div>
-        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">Categories</h2>
+          <div>
+            <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">A treat for every mood</h2>
+            <p className="mt-0.5 text-xs text-muted">Cakes, pastries, snacks & more</p>
+          </div>
           <Link to="/menu" className="text-xs font-medium text-muted transition hover:text-dark">See all</Link>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
@@ -104,6 +121,25 @@ export default function HomePage({ searchQuery = '' }) {
         </div>
       </section>
 
+      {visibleTreats.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">More bakery favourites</h2>
+              <p className="mt-0.5 text-xs text-muted sm:text-sm">Fresh pastries, snacks and little bites</p>
+            </div>
+            <Link to="/menu" className="flex items-center gap-1 text-xs font-medium text-muted transition hover:text-dark">
+              View menu <ChevronRight size={14} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+            {visibleTreats.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {visibleBestsellers.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="mb-4 flex items-center justify-between">
@@ -119,34 +155,6 @@ export default function HomePage({ searchQuery = '' }) {
             {visibleBestsellers.slice(0, 4).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
-        </section>
-      )}
-
-      {preOrderCakes.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-          <div className="rounded-[24px] border border-black/5 bg-white p-5 sm:p-8">
-            <div className="mb-5 flex items-start gap-3">
-              <div className="shrink-0 rounded-xl bg-terracotta/25 p-2.5">
-                <Gift size={22} className="text-dark" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-dark sm:text-xl">Birthday & Celebration Cakes</h2>
-                <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
-                  Pre-order your cake and we'll have it fresh for your special day. Place orders at least 24 hours in advance.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-              {preOrderCakes.slice(0, 3).map((product) => (
-                <ProductCard key={product.id} product={product} compact />
-              ))}
-            </div>
-            <div className="mt-5 text-center">
-              <Link to="/menu?category=cakes" className="inline-flex items-center gap-2 text-sm font-semibold text-dark hover:underline">
-                Browse all cakes <ArrowRight size={14} />
-              </Link>
-            </div>
           </div>
         </section>
       )}

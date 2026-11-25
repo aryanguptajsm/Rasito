@@ -58,8 +58,25 @@ const CAKE_ASSETS = [
   { name: 'Snowman Carnival Celebration Cake', price: 350, folder: '350rs cake', file: 'Snowman Carnival Celebration Cake.png' },
   { name: 'Vibrant Chocolate Birthday Cake', price: 350, folder: '350rs cake', file: 'Vibrant Chocolate Birthday Cake.png' },
   { name: 'Celebration Chocolate Cake', price: 350, folder: '350rs cake', file: 'cbcb0420-2b2d-424b-a8fe-ccadf89d83c3.jpg' },
-  { name: 'Chocolate Mocha Cake', price: 480, folder: '', file: 'Chocoletemocha.png' },
-  { name: 'Chocolate Mocha Celebration Cake', price: 480, folder: '', file: 'Chocoletemochas.png' },
+  { name: 'Barbie Doll Ruffle Cake on Gold Board', price: 400, folder: '400rs cakes', file: 'Barbie Doll Ruffle Cake on Gold Board.png' },
+  { name: 'Butterfly Heart Orange Drip Cake', price: 400, folder: '400rs cakes', file: 'Butterfly Heart Orange Drip Cake.png' },
+  { name: 'Chocolate Ganache Cherry Cookie Cake', price: 400, folder: '400rs cakes', file: 'Chocolate Ganache Cherry Cookie Cake.png' },
+  { name: 'Colourful Chocolate Drizzle Cake', price: 400, folder: '400rs cakes', file: 'Colourful Chocolate Drizzle Cake.png' },
+  { name: 'Colourful Chocolate Mirror-Glaze Cake', price: 400, folder: '400rs cakes', file: 'Colourful Chocolate Mirror-Glaze Cake.png' },
+  { name: 'Decadent Chocolate Berry Drip Cake', price: 400, folder: '400rs cakes', file: 'Decadent Chocolate Berry Drip Cake.png' },
+  { name: 'Elegant Butterfly Rose Celebration Cake', price: 400, folder: '400rs cakes', file: 'Elegant Butterfly Rose Celebration Cake.png' },
+  { name: 'Elegant Gold-Trimmed Floral Celebration Cake', price: 400, folder: '400rs cakes', file: 'Elegant Gold-Trimmed Floral Celebration Cake.png' },
+  { name: 'Glossy Chocolate Cake with Cherry and Shards', price: 400, folder: '400rs cakes', file: 'Glossy Chocolate Cake with Cherry and Shards.png' },
+  { name: 'Glossy Chocolate Sprinkle Celebration Cake', price: 400, folder: '400rs cakes', file: 'Glossy Chocolate Sprinkle Celebration Cake.png' },
+  { name: 'Glossy Yellow Heart Cake', price: 400, folder: '400rs cakes', file: 'Glossy Yellow Heart Cake.png' },
+  { name: 'Glossy Yellow Pineapple Cherry Cake', price: 400, folder: '400rs cakes', file: 'Glossy Yellow Pineapple Cherry Cake.png' },
+  { name: 'Mango-Glazed Chocolate Rose Cake', price: 400, folder: '400rs cakes', file: 'Mango-Glazed Chocolate Rose Cake.png' },
+  { name: 'Pastel Pearl Rosette Celebration Cake', price: 400, folder: '400rs cakes', file: 'Pastel Pearl Rosette Celebration Cake.png' },
+  { name: 'Peacock Feather Yellow Glaze Cake', price: 400, folder: '400rs cakes', file: 'Peacock Feather Yellow Glaze Cake.png' },
+  { name: 'Red Roses and Gold Cake Lettering', price: 400, folder: '400rs cakes', file: 'Red Roses and Gold Cake Lettering.png' },
+  { name: 'Romantic Chocolate Cake with Pink Roses', price: 400, folder: '400rs cakes', file: 'Romantic Chocolate Cake with Pink Roses.png' },
+  { name: 'Vibrant Mango Birthday Cake', price: 400, folder: '400rs cakes', file: 'Vibrant Mango Birthday Cake.png' },
+
 ];
 
 const CAKE_PRODUCTS = CAKE_ASSETS.map((cake) => ({
@@ -139,18 +156,7 @@ export const PRODUCTS = [
     isVeg: true,
     isBestseller: true,
   },
-  {
-    id: id(),
-    name: 'Black Forest Cake',
-    category: 'cakes',
-    price: 450,
-    description: 'Indulgent layers of chocolate sponge, whipped cream, and cherries. Perfect for celebrations.',
-    image: '/images/black-forest-cake.jpg',
-    available: true,
-    isVeg: true,
-    isBestseller: true,
-    isPreOrder: true,
-  },
+  
   {
     id: id(),
     name: 'Cookies Pack',
@@ -195,19 +201,7 @@ export const PRODUCTS = [
     isVeg: true,
     isBestseller: false,
   },
-  {
-    id: id(),
-    name: 'Vanilla Cake',
-    category: 'cakes',
-    price: 400,
-    originalPrice: 450,
-    description: 'Classic vanilla sponge cake with buttercream frosting. Simple elegance for any celebration.',
-    image: '/images/vanilla-cake.jpg',
-    available: true,
-    isVeg: true,
-    isBestseller: false,
-    isPreOrder: true,
-  },
+  
   {
     id: id(),
     name: 'Choco Chip Cookies',
@@ -230,18 +224,7 @@ export const PRODUCTS = [
     isVeg: true,
     isBestseller: false,
   },
-  {
-    id: id(),
-    name: 'Red Velvet Cake',
-    category: 'cakes',
-    price: 550,
-    description: 'Stunning red velvet layers with cream cheese frosting. A showstopper for special moments.',
-    image: '/images/red-velvet-cake.jpg',
-    available: false,
-    isVeg: true,
-    isBestseller: false,
-    isPreOrder: true,
-  },
+  
   {
     id: id(),
     name: 'Samosa',
@@ -264,18 +247,7 @@ export const PRODUCTS = [
     isVeg: true,
     isBestseller: false,
   },
-  {
-    id: id(),
-    name: 'Chocolete mocha cake ',
-    category: 'cakes',
-    price: 480,
-    description: 'Rich Chocalate with crunchy chocochips filled in bread and praline topping.',
-    image: '/Chocoletemocha.png',
-    available: true,
-    isVeg: true,
-    isBestseller: false,
-    isPreOrder: true,
-  },
+ 
   ...CAKE_PRODUCTS,
 ];
 
