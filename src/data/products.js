@@ -155,7 +155,7 @@ export const PRODUCTS = [
     available: true,
     isVeg: true,
     isBestseller: true,
-  },
+  }
   
   {
     id: id(),
