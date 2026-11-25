@@ -1,9 +1,9 @@
 {
-  "name": "rasito",
+  "name": "restro",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Rasito — Fresh bakery treats delivered to your village",
+  "description": "Restro — Fresh bakery treats delivered to your village",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

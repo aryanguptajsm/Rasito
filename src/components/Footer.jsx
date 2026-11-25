@@ -8,9 +8,9 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <div className="footer-reveal grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <section className="footer-column">
-            <Link to="/" className="mb-4 flex w-fit items-center gap-2" aria-label="Rasito home">
+            <Link to="/" className="mb-4 flex w-fit items-center gap-2" aria-label="Restro home">
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
-              <span className="text-xl font-bold tracking-tight text-white">Rasito</span>
+              <span className="text-xl font-bold tracking-tight text-white">Restro</span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
               Cakes, pastries, patties, and more from local bakery suppliers, delivered to your door.

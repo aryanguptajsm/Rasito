@@ -1,6 +1,6 @@
-# Rasito
+# Restro
 
-Rasito is a local bakery ordering website for discovering and ordering fresh bakery treats.
+Restro is a local bakery ordering website for discovering and ordering fresh bakery treats.
 
 ## What You Can Do
 

@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * RASITO — CONFIGURATION
+ * RESTRO — CONFIGURATION
  * ============================================================
  * Business settings, delivery config, and WhatsApp configuration.
  * All values are editable from this file.
@@ -11,7 +11,7 @@
 
 const config = {
   /** Business name */
-  businessName: 'Rasito',
+  businessName: 'Restro',
 
   /** Business tagline */
   tagline: 'Fresh Bakery Treats, Delivered to Your Door.',

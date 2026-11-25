@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * RASITO — CENTRAL PRODUCT DATA (SAMPLE / DEMO)
+ * RESTRO — CENTRAL PRODUCT DATA (SAMPLE / DEMO)
  * ============================================================
  * All product names, prices, images, categories, and availability
  * are editable from this single file.

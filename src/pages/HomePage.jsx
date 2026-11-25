@@ -39,6 +39,27 @@ export default function HomePage({ searchQuery = '' }) {
       )}
 
       <section className="mx-auto max-w-7xl px-4 pb-2 pt-5 sm:px-6 lg:px-8">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">All Products</h2>
+            <p className="mt-0.5 text-xs text-muted sm:text-sm">{visibleProducts.length} items available</p>
+          </div>
+          <Link to="/menu" className="flex items-center gap-1 text-xs font-medium text-muted transition hover:text-dark">
+            View menu <ChevronRight size={14} />
+          </Link>
+        </div>
+        {visibleProducts.length > 0 ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <p className="rounded-2xl bg-white p-5 text-center text-sm text-muted">No bakery treats match “{searchQuery}”.</p>
+        )}
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-2 pt-5 sm:px-6 lg:px-8">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">Today's Offer!</h2>
           <Link to="/menu" className="text-xs font-medium text-muted transition hover:text-dark">See all</Link>
@@ -101,27 +122,6 @@ export default function HomePage({ searchQuery = '' }) {
           </div>
         </section>
       )}
-
-      <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-        <div className="mb-4 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">Popular Right Now</h2>
-            <p className="mt-0.5 text-xs text-muted sm:text-sm">Fresh and ready to order</p>
-          </div>
-          <Link to="/menu" className="flex items-center gap-1 text-xs font-medium text-muted transition hover:text-dark">
-            See all <ChevronRight size={14} />
-          </Link>
-        </div>
-        {visibleProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            {visibleProducts.slice(0, 8).map((product) => (
-              <ProductCard key={product.id} product={product} compact />
-            ))}
-          </div>
-        ) : (
-          <p className="rounded-2xl bg-white p-5 text-center text-sm text-muted">No bakery treats match “{searchQuery}”.</p>
-        )}
-      </section>
 
       {preOrderCakes.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
