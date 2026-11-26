@@ -32,16 +32,16 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
     <div className="relative">
       <button
         onClick={() => setLocationOpen(!locationOpen)}
-        className={`flex max-w-full items-center gap-2 rounded-full transition-colors ${isHome ? 'text-white hover:bg-white/10' : 'w-full justify-start text-muted hover:bg-cream sm:w-auto'} ${isHome ? 'px-0 py-1' : 'px-2 py-1.5'}`}
+        className={`flex max-w-full items-center rounded-full transition-colors ${isHome ? 'max-w-[145px] gap-1.5 text-white hover:bg-white/10 sm:max-w-none sm:gap-2' : 'w-full justify-start gap-2 text-muted hover:bg-cream sm:w-auto'} ${isHome ? 'px-0 py-1' : 'px-2 py-1.5'}`}
         aria-label="Select delivery location"
         aria-expanded={locationOpen}
       >
-        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${isHome ? 'bg-white/10' : 'bg-cream'}`}>
-          <MapPin size={17} className={isHome ? 'text-terracotta' : 'text-terracotta'} />
+        <span className={`flex shrink-0 items-center justify-center rounded-full ${isHome ? 'h-8 w-8 bg-white/10 sm:h-10 sm:w-10' : 'h-10 w-10 bg-cream'}`}>
+          <MapPin size={isHome ? 16 : 17} className="text-terracotta" />
         </span>
         <span className="min-w-0 flex-1 text-left leading-tight">
-          <span className={`block text-[10px] ${isHome ? 'text-white/55' : 'text-muted'}`}>Delivery location</span>
-          <span className={`flex min-w-0 items-center gap-1 text-xs font-semibold ${isHome ? 'text-white' : 'text-dark'}`}>
+          <span className={`block truncate ${isHome ? 'text-[9px] text-white/55 sm:text-[10px]' : 'text-[10px] text-muted'}`}>Delivery location</span>
+          <span className={`flex min-w-0 items-center gap-1 font-semibold ${isHome ? 'text-[11px] text-white sm:text-xs' : 'text-xs text-dark'}`}>
             <span className="min-w-0 truncate">{selectedArea}</span>
             <ChevronDown size={12} className="shrink-0" />
           </span>
@@ -89,13 +89,11 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
               <span className="text-lg font-bold tracking-tight text-white">Restro</span>
             </Link>
-            <div className="flex items-center gap-2">
-              <div className="hidden sm:block">{areaPicker}</div>
+            <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+              <div className="min-w-0">{areaPicker}</div>
               {cartAction}
             </div>
           </div>
-
-          <div className="mt-3 sm:hidden">{areaPicker}</div>
 
           <div className="mt-5 sm:mt-8">
             <p className="mb-1 text-xs font-medium uppercase tracking-wide text-white/55">Local bakery, at your door</p>

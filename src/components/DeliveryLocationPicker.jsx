@@ -42,6 +42,11 @@ function worldToCoordinates({ x, y }, zoom) {
   };
 }
 
+function getGoogleMapsUrl({ lat, lon }) {
+  const query = encodeURIComponent(`${lat},${lon}`);
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
+
 export default function DeliveryLocationPicker({
   id,
   label = 'Delivery area',
@@ -509,9 +514,16 @@ export default function DeliveryLocationPicker({
                 </button>
               </div>
               <div className="flex items-center justify-between gap-3">
-                <p className="min-w-0 truncate text-xs text-muted">
-                  {mapCenter?.lat.toFixed(5)}, {mapCenter?.lon.toFixed(5)}
-                </p>
+                {mapCenter && (
+                  <a
+                    href={getGoogleMapsUrl(mapCenter)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="min-w-0 truncate text-xs font-semibold text-blue-700 underline underline-offset-2"
+                  >
+                    Open in Google Maps
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={() => confirmMapCenter(true)}
