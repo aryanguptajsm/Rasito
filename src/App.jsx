@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Header from './components/Header';
@@ -18,6 +18,12 @@ function AppLayout() {
   const [deliveryLocation, setDeliveryLocation] = useState({ area: '', coordinates: '' });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location.pathname]);
+
   const updateDeliveryLocation = (changes) => {
     setDeliveryLocation((currentLocation) => ({ ...currentLocation, ...changes }));
   };
