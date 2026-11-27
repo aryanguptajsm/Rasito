@@ -32,7 +32,11 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
     <div className="relative">
       <button
         onClick={() => setLocationOpen(!locationOpen)}
-        className={`flex max-w-full items-center rounded-full transition-colors ${isHome ? 'max-w-[145px] gap-1.5 text-white hover:bg-white/10 sm:max-w-none sm:gap-2' : 'w-full justify-start gap-2 text-muted hover:bg-cream sm:w-auto'} ${isHome ? 'px-0 py-1' : 'px-2 py-1.5'}`}
+        className={`flex max-w-full items-center rounded-full transition-colors ${
+          isHome
+            ? 'max-w-[145px] gap-1.5 text-white hover:bg-white/10 sm:max-w-none sm:gap-2'
+            : 'w-full min-w-0 justify-start gap-2 text-muted hover:bg-cream sm:w-auto'
+        } ${isHome ? 'px-0 py-1' : 'h-10 px-1.5 py-1 sm:px-2'}`}
         aria-label="Select delivery location"
         aria-expanded={locationOpen}
       >
@@ -134,9 +138,9 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
         <div className="flex h-14 items-center justify-between gap-3 sm:h-16">
           <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Restro home">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
-            <span className="text-base font-bold tracking-tight text-dark sm:text-lg">Restro</span>
+            <span className="hidden text-base font-bold tracking-tight text-dark min-[390px]:block sm:text-lg">Restro</span>
           </Link>
-          <div className="hidden sm:block">{areaPicker}</div>
+          <div className="ml-auto min-w-0 flex-1 sm:ml-0 sm:max-w-[260px]">{areaPicker}</div>
           <form onSubmit={handleSearchSubmit} className="hidden max-w-md flex-1 items-center md:flex">
             <div className="relative w-full">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
@@ -152,9 +156,6 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
           <div className="flex items-center gap-2">
             {cartAction}
           </div>
-        </div>
-        <div className="pb-2 sm:hidden">
-          {areaPicker}
         </div>
       </div>
     </header>

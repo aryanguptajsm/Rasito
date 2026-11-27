@@ -15,7 +15,20 @@ import AdminPage from './pages/AdminPage';
 
 function AppLayout() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [deliveryLocation, setDeliveryLocation] = useState({ area: '', coordinates: '' });
+  const [deliveryLocation, setDeliveryLocation] = useState(() => {
+    try {
+      const savedLocation = JSON.parse(window.localStorage.getItem('foodgoin-delivery-location') || 'null');
+      if (savedLocation?.area && typeof savedLocation.area === 'string') {
+        return {
+          area: savedLocation.area,
+          coordinates: typeof savedLocation.coordinates === 'string' ? savedLocation.coordinates : '',
+        };
+      }
+    } catch {
+      // Ignore invalid saved browser state.
+    }
+    return { area: '', coordinates: '' };
+  });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
@@ -25,7 +38,11 @@ function AppLayout() {
   }, [location.pathname]);
 
   const updateDeliveryLocation = (changes) => {
-    setDeliveryLocation((currentLocation) => ({ ...currentLocation, ...changes }));
+    setDeliveryLocation((currentLocation) => {
+      const nextLocation = { ...currentLocation, ...changes };
+      window.localStorage.setItem('foodgoin-delivery-location', JSON.stringify(nextLocation));
+      return nextLocation;
+    });
   };
 
   return (
