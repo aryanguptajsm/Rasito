@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
-  ArrowLeft, Plus, Minus, ShoppingCart, Leaf, Calendar, AlertTriangle, Clock, Truck, Info,
+  ArrowLeft, Plus, Minus, ShoppingCart, Leaf, Calendar, AlertTriangle, Clock, Truck, X,
 } from 'lucide-react';
 import { productService } from '../services/dataService';
 import { useCart } from '../context/CartContext';
@@ -24,6 +24,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [deliveryDate, setDeliveryDate] = useState('');
   const [preOrderNote, setPreOrderNote] = useState('');
+  const [imageOpen, setImageOpen] = useState(false);
 
   const cartQuantity = product ? getItemQuantity(product.id) : 0;
 
@@ -34,6 +35,20 @@ export default function ProductDetailPage() {
       setLoading(false);
     });
   }, [id]);
+
+  useEffect(() => {
+    if (!imageOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setImageOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [imageOpen]);
 
   if (loading) {
     return (
@@ -93,7 +108,12 @@ export default function ProductDetailPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6 pb-8">
         {/* Image */}
-        <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-cream">
+        <button
+          type="button"
+          onClick={() => setImageOpen(true)}
+          className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-cream text-left"
+          aria-label={`View larger image of ${product.name}`}
+        >
           <img
             src={imgError ? FALLBACK_IMAGE : product.image}
             alt={product.name}
@@ -112,7 +132,7 @@ export default function ProductDetailPage() {
               {discountPercent}% OFF
             </span>
           )}
-        </div>
+        </button>
 
         {/* Details */}
         <div className="flex flex-col">
@@ -256,6 +276,32 @@ export default function ProductDetailPage() {
           )}
         </div>
       </div>
+
+      {imageOpen && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 p-3 animate-fade-in sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Large view of ${product.name}`}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setImageOpen(false);
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setImageOpen(false)}
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-dark shadow-lg"
+            aria-label="Close image"
+          >
+            <X size={22} />
+          </button>
+          <img
+            src={imgError ? FALLBACK_IMAGE : product.image}
+            alt={product.name}
+            className="max-h-[92dvh] max-w-[94vw] object-contain rounded-lg shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 }

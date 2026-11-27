@@ -7,17 +7,25 @@ const MAX_MERCATOR_LATITUDE = 85.05112878;
 
 function getAreaName(result) {
   const address = result.address || {};
-  const village = address.village || address.hamlet || address.isolated_dwelling;
-  const locality =
-    address.suburb || address.neighbourhood || address.quarter || address.locality ||
-    address.town || address.city_district || address.municipality || address.city;
-  const district = address.county || address.state_district;
-  const names = [village, locality, district]
-    .filter((name, index, all) => name && all.indexOf(name) === index);
+  const placeName =
+    address.village ||
+    address.hamlet ||
+    address.isolated_dwelling ||
+    address.suburb ||
+    address.neighbourhood ||
+    address.quarter ||
+    address.locality ||
+    address.town ||
+    address.city ||
+    address.municipality ||
+    address.city_district ||
+    address.county ||
+    address.state_district;
 
-  return names.length > 0
-    ? names.join(', ')
-    : (result.display_name || '').split(',').slice(0, 3).map((part) => part.trim()).filter(Boolean).join(', ');
+  if (placeName) return placeName.trim();
+  return (result.name || result.display_name || '')
+    .split(',')[0]
+    .trim();
 }
 
 function coordinatesToWorld({ lat, lon }, zoom) {
@@ -69,6 +77,14 @@ export default function DeliveryLocationPicker({
   const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
   const [mapSearching, setMapSearching] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
+  const [customAreas, setCustomAreas] = useState(() => {
+    try {
+      const savedAreas = JSON.parse(window.localStorage.getItem('foodgoin-custom-delivery-areas') || '[]');
+      return Array.isArray(savedAreas) ? savedAreas : [];
+    } catch {
+      return [];
+    }
+  });
   const mapRef = useRef(null);
   const dragRef = useRef(null);
   const skipSearchRef = useRef(false);
@@ -76,6 +92,8 @@ export default function DeliveryLocationPicker({
   useEffect(() => {
     setSearchText(value || '');
   }, [value]);
+
+  const deliveryAreas = [...new Set([...(areas || []), ...customAreas])];
 
   useEffect(() => {
     const query = searchText.trim();
@@ -225,9 +243,35 @@ export default function DeliveryLocationPicker({
     onChange(nextValue);
   };
 
-  const matchingAreas = areas.filter((area) =>
+  const matchingAreas = deliveryAreas.filter((area) =>
     area.toLowerCase().includes(searchText.trim().toLowerCase())
   );
+  const exactAreaMatch = deliveryAreas.some(
+    (area) => area.trim().toLowerCase() === searchText.trim().toLowerCase()
+  );
+  const customVillageText = searchText.trim();
+  const canAddCustomVillage =
+    customVillageText.length >= 2 &&
+    !exactAreaMatch &&
+    suggestions.length === 0;
+
+  const addCustomVillage = () => {
+    const villageName = customVillageText;
+    if (!villageName) return;
+    const nextCustomAreas = [...new Set([villageName, ...customAreas])]
+      .filter(Boolean)
+      .slice(0, 50);
+    setCustomAreas(nextCustomAreas);
+    window.localStorage.setItem(
+      'foodgoin-custom-delivery-areas',
+      JSON.stringify(nextCustomAreas)
+    );
+    setSearchText(villageName);
+    setSuggestions([]);
+    setLocationError('');
+    onCoordinatesChange('');
+    onChange(villageName);
+  };
   const mapWorldCenter = mapCenter ? coordinatesToWorld(mapCenter, mapZoom) : null;
   const firstTileX = mapWorldCenter ? Math.floor(mapWorldCenter.x / TILE_SIZE) : 0;
   const firstTileY = mapWorldCenter ? Math.floor(mapWorldCenter.y / TILE_SIZE) : 0;
@@ -280,7 +324,7 @@ export default function DeliveryLocationPicker({
           type="search"
           role="combobox"
           aria-autocomplete="list"
-          aria-expanded={suggestions.length > 0 || matchingAreas.length > 0}
+          aria-expanded={suggestions.length > 0 || matchingAreas.length > 0 || canAddCustomVillage}
           aria-controls={`${id}-suggestions`}
           value={searchText}
           onChange={handleSearchChange}
@@ -301,7 +345,7 @@ export default function DeliveryLocationPicker({
           <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
         )}
 
-        {(suggestions.length > 0 || (searchText.trim().length > 0 && matchingAreas.length > 0)) && (
+        {(suggestions.length > 0 || (searchText.trim().length > 0 && matchingAreas.length > 0) || canAddCustomVillage) && (
           <ul
             id={`${id}-suggestions`}
             role="listbox"
@@ -339,6 +383,18 @@ export default function DeliveryLocationPicker({
                 </button>
               </li>
             ))}
+            {canAddCustomVillage && (
+              <li>
+                <button
+                  type="button"
+                  onClick={addCustomVillage}
+                  className="flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold text-dark transition hover:bg-cream"
+                >
+                  <Plus size={15} className="shrink-0 text-terracotta" />
+                  Add village: {customVillageText}
+                </button>
+              </li>
+            )}
           </ul>
         )}
       </div>
