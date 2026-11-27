@@ -14,18 +14,27 @@ function getAreaName(result) {
     address.suburb ||
     address.neighbourhood ||
     address.quarter ||
-    address.locality ||
+    address.locality;
+
+  if (placeName) return placeName.trim();
+  const broaderName =
     address.town ||
     address.city ||
     address.municipality ||
     address.city_district ||
     address.county ||
     address.state_district;
+  if (broaderName) return broaderName.trim();
+  return (result.name || result.display_name || '').split(',')[0].trim();
+}
 
-  if (placeName) return placeName.trim();
-  return (result.name || result.display_name || '')
-    .split(',')[0]
-    .trim();
+function getBigDataAreaName(result) {
+  const name =
+    result.locality ||
+    result.localityInfo?.administrative?.find((item) => item?.order === 8)?.name ||
+    result.city ||
+    result.principalSubdivision;
+  return typeof name === 'string' ? name.trim() : '';
 }
 
 function coordinatesToWorld({ lat, lon }, zoom) {
@@ -115,6 +124,7 @@ export default function DeliveryLocationPicker({
           format: 'jsonv2',
           addressdetails: '1',
           limit: '5',
+          countrycodes: 'in',
           'accept-language': 'en',
         });
         const response = await fetch(`${NOMINATIM_URL}/search?${params}`, {
@@ -167,12 +177,43 @@ export default function DeliveryLocationPicker({
       lon: String(coordinates.lon),
       format: 'jsonv2',
       addressdetails: '1',
+      namedetails: '1',
+      zoom: '18',
       'accept-language': 'en',
     });
-    const response = await fetch(`${NOMINATIM_URL}/reverse?${params}`);
-    if (!response.ok) throw new Error('Could not identify this location');
-    const result = await response.json();
-    const areaName = getAreaName(result);
+    const bigDataParams = new URLSearchParams({
+      latitude: String(coordinates.lat),
+      longitude: String(coordinates.lon),
+      localityLanguage: 'en',
+    });
+
+    const [nominatimResponse, bigDataResponse] = await Promise.all([
+      fetch(`${NOMINATIM_URL}/reverse?${params}`),
+      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${bigDataParams}`).catch(() => null),
+    ]);
+    if (!nominatimResponse.ok) throw new Error('Could not identify this location');
+
+    const result = await nominatimResponse.json();
+    let bigDataName = '';
+    if (bigDataResponse?.ok) {
+      try {
+        bigDataName = getBigDataAreaName(await bigDataResponse.json());
+      } catch {
+        bigDataName = '';
+      }
+    }
+
+    const nominatimName = getAreaName(result);
+    const address = result.address || {};
+    const hasSmallNominatimPlace =
+      address.village ||
+      address.hamlet ||
+      address.isolated_dwelling ||
+      address.suburb ||
+      address.neighbourhood ||
+      address.quarter ||
+      address.locality;
+    const areaName = (!hasSmallNominatimPlace && bigDataName) ? bigDataName : nominatimName;
     if (!areaName) throw new Error('Could not identify this area');
     return { name: areaName, lat: coordinates.lat, lon: coordinates.lon };
   };
@@ -206,6 +247,9 @@ export default function DeliveryLocationPicker({
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
         try {
+          if (typeof coords.accuracy === 'number' && coords.accuracy > 500) {
+            setLocationError('Your GPS signal is not accurate enough yet. Move outdoors and try again.');
+          }
           const selectedPlace = await lookupCoordinates({ lat: coords.latitude, lon: coords.longitude });
           setMapPlace(selectedPlace);
           setMapCenter({ lat: selectedPlace.lat, lon: selectedPlace.lon });
@@ -328,6 +372,15 @@ export default function DeliveryLocationPicker({
           aria-controls={`${id}-suggestions`}
           value={searchText}
           onChange={handleSearchChange}
+          onKeyDown={(event) => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            if (suggestions.length > 0) {
+              applyPlace(suggestions[0]);
+            } else if (canAddCustomVillage) {
+              addCustomVillage();
+            }
+          }}
           onFocus={() => setLocationError('')}
           placeholder="Type your village, town or area"
           autoComplete="address-level2"
