@@ -47,7 +47,9 @@ export default function HomePage({ searchQuery = '' }) {
             </div>
             <h3 className="text-xl font-extrabold tracking-tight text-dark sm:text-2xl">A little treat, on us!</h3>
             <p className="mt-1 max-w-sm text-[11px] leading-relaxed text-muted sm:text-sm">
-              {config.delivery.freeAbove
+              {config.delivery.fee === 0
+                ? 'Enjoy free delivery on every order. Happy cravings!'
+                : config.delivery.freeAbove
                 ? `Get free delivery on orders of ₹${config.delivery.freeAbove} or more. Happy cravings!`
                 : 'Fresh bakery treats delivered to your door'}
             </p>
@@ -95,7 +97,7 @@ export default function HomePage({ searchQuery = '' }) {
         <div className="mb-3 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold tracking-tight text-dark sm:text-xl">A treat for every mood</h2>
-            <p className="mt-0.5 text-xs text-muted">Cakes, pastries, snacks & more</p>
+            <p className="mt-0.5 text-xs text-muted">Choose a celebration cake for your occasion</p>
           </div>
           <Link to="/menu" className="text-xs font-medium text-muted transition hover:text-dark">See all</Link>
         </div>

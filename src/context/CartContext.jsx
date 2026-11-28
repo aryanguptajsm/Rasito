@@ -4,10 +4,13 @@ const CartContext = createContext(null);
 
 const CART_STORAGE_KEY = 'gaonbites_cart';
 
+const keepPricedProducts = (items) =>
+  Array.isArray(items) ? items.filter((item) => item && item.price >= 250) : [];
+
 const loadCart = () => {
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    return stored ? keepPricedProducts(JSON.parse(stored)) : [];
   } catch {
     return [];
   }
@@ -76,7 +79,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     const handler = (e) => {
       if (e.key === CART_STORAGE_KEY) {
-        const newItems = e.newValue ? JSON.parse(e.newValue) : [];
+        const newItems = e.newValue ? keepPricedProducts(JSON.parse(e.newValue)) : [];
         // Force re-render by dispatching a clear and re-add
         dispatch({ type: 'CLEAR_CART' });
         newItems.forEach((item) => dispatch({ type: 'ADD_ITEM', payload: item }));

@@ -267,8 +267,12 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
           <p className="text-xs text-muted">{itemCount} {itemCount === 1 ? 'item' : 'items'} · Total ₹{total}</p>
         </div>
         <div className="hidden rounded-xl bg-cream px-3 py-2 text-right sm:block">
-          <p className="text-[10px] text-muted">Free delivery from</p>
-          <p className="text-sm font-bold text-dark">₹{config.delivery.freeAbove}</p>
+          <p className="text-[10px] text-muted">
+            {config.delivery.fee === 0 ? 'Delivery fee' : 'Free delivery from'}
+          </p>
+          <p className="text-sm font-bold text-dark">
+            {config.delivery.fee === 0 ? 'FREE' : `₹${config.delivery.freeAbove}`}
+          </p>
         </div>
       </div>
 

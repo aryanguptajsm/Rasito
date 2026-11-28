@@ -240,8 +240,12 @@ export default function AdminPage() {
                 Delivery Settings
               </h3>
               <div className="space-y-1 text-sm text-muted">
-                <p>Fee: ₹{config.delivery.fee}</p>
-                <p>Free above: ₹{config.delivery.freeAbove || 'N/A'}</p>
+                <p>Fee: {config.delivery.fee === 0 ? 'Free' : `₹${config.delivery.fee}`}</p>
+                <p>
+                  Free above: {config.delivery.freeAbove
+                    ? `₹${config.delivery.freeAbove}`
+                    : config.delivery.fee === 0 ? 'all orders' : 'N/A'}
+                </p>
                 <p>Minimum order: ₹{config.delivery.minimumOrder || 'None'}</p>
                 <p>Estimated time: {config.delivery.estimatedTime}</p>
                 <p>Service areas: {config.delivery.areas.join(', ')}</p>

@@ -55,7 +55,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
       {locationOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setLocationOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
+          <div className="absolute right-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in max-[639px]:-right-16">
             <DeliveryLocationPicker
               id="header-delivery-area"
               value={deliveryLocation.area}

@@ -15,12 +15,6 @@
 
 export const CATEGORIES = [
   { id: 'cakes', label: 'Cakes', emoji: '🎂' },
-  { id: 'pastries', label: 'Pastries', emoji: '🥐' },
-  { id: 'patties', label: 'Patties', emoji: '🥟' },
-  { id: 'cream-rolls', label: 'Cream Rolls', emoji: '🧁' },
-  { id: 'burgers', label: 'Burgers', emoji: '🍔' },
-  { id: 'cookies', label: 'Cookies', emoji: '🍪' },
-  { id: 'snacks', label: 'Snacks', emoji: '🥨' },
 ];
 
 let _nextId = 1;
@@ -249,7 +243,7 @@ export const PRODUCTS = [
   },
  
   ...CAKE_PRODUCTS,
-];
+].filter((product) => product.price >= 250);
 
 /** Helper: get products by category */
 export const getProductsByCategory = (categoryId) =>
