@@ -5,7 +5,6 @@
  * Business settings, delivery config, and WhatsApp configuration.
  * All values are editable from this file.
  *
- * ⚠️  DEMO MODE — Update these values before going live.
  * ============================================================
  */
 
@@ -67,13 +66,6 @@ const config = {
   /** Order confirmation flow */
   orderConfirmationNote:
     'Sending your order via WhatsApp is a request. Your order is confirmed only after the bakery reviews availability and accepts it. You will receive a confirmation message on WhatsApp.',
-
-  /**
-   * Demo mode flag
-   * When true, shows demo banners and uses local data.
-   * Set to false when backend (Supabase) is connected.
-   */
-  isDemoMode: true,
 
   /** Admin settings — demo only, no real auth */
   admin: {

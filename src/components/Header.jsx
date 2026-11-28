@@ -4,6 +4,7 @@ import { Search, ShoppingCart, MapPin, ChevronDown, SlidersHorizontal } from 'lu
 import { useCart } from '../context/CartContext';
 import config from '../data/config';
 import DeliveryLocationPicker from './DeliveryLocationPicker';
+import BrandLogo from './BrandLogo';
 
 export default function Header({ onSearch, deliveryLocation, onDeliveryLocationChange }) {
   const { itemCount } = useCart();
@@ -54,7 +55,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
       {locationOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setLocationOpen(false)} />
-          <div className="absolute left-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
+          <div className="absolute right-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-black/5 bg-white p-4 text-dark shadow-xl animate-fade-in">
             <DeliveryLocationPicker
               id="header-delivery-area"
               value={deliveryLocation.area}
@@ -89,10 +90,7 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
       <header className="relative z-40 overflow-visible rounded-b-[28px] bg-[#11120f] text-white shadow-sm sm:rounded-b-[32px]">
         <div className="mx-auto max-w-7xl px-5 pb-6 pt-3 sm:px-8 sm:pb-8 sm:pt-5 lg:px-10">
           <div className="flex items-center justify-between gap-4">
-            <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Restro home">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
-              <span className="text-lg font-bold tracking-tight text-white">Restro</span>
-            </Link>
+            <BrandLogo light compact />
             <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
               <div className="min-w-0">{areaPicker}</div>
               {cartAction}
@@ -133,13 +131,10 @@ export default function Header({ onSearch, deliveryLocation, onDeliveryLocationC
   }
 
   return (
-    <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#e7e8eb]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
+    <header className={`sticky top-0 z-40 border-b border-black/5 bg-[#f6f4ef]/95 backdrop-blur-md ${location.pathname === '/cart' ? 'hidden md:block' : ''}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between gap-3 sm:h-16">
-          <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Restro home">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta text-sm font-extrabold text-dark">R</span>
-            <span className="hidden text-base font-bold tracking-tight text-dark min-[390px]:block sm:text-lg">Restro</span>
-          </Link>
+          <BrandLogo compact />
           <div className="ml-auto min-w-0 flex-1 sm:ml-0 sm:max-w-[260px]">{areaPicker}</div>
           <form onSubmit={handleSearchSubmit} className="hidden max-w-md flex-1 items-center md:flex">
             <div className="relative w-full">

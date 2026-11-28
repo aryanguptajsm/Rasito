@@ -95,8 +95,6 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
     name: '',
     phone: '',
     address: '',
-    landmark: '',
-    instructions: '',
     paymentMethod: paymentOptions[0]?.label || '',
     orderNotes: '',
     deliveryDate: '',
@@ -224,8 +222,6 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
           phone: form.phone,
           village: deliveryLocation.area,
           address: form.address,
-          landmark: form.landmark,
-          instructions: form.instructions,
           paymentMethod: form.paymentMethod,
           orderNotes: form.orderNotes,
           deliveryDate: form.deliveryDate,
@@ -336,22 +332,6 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
                 placeholder="Le Uncholia Shiv Mandir Gali"
                 suggestions={['Le Uncholia Shiv Mandir Gali']}
                 required
-              />
-              <InputField
-                icon={MapPin}
-                label="Landmark"
-                value={form.landmark}
-                error={errors.landmark}
-                onChange={handleChange('landmark')}
-                placeholder="Near temple, school, etc. (optional)"
-              />
-              <InputField
-                label="Delivery Instructions"
-                value={form.instructions}
-                error={errors.instructions}
-                onChange={handleChange('instructions')}
-                placeholder="Ring the bell twice, call on arrival, etc."
-                rows={2}
               />
             </div>
 

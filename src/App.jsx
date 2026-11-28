@@ -31,6 +31,8 @@ function AppLayout() {
   });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  const showStickyCartBar =
+    !isAdmin && location.pathname !== '/cart' && location.pathname !== '/checkout';
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -76,7 +78,7 @@ function AppLayout() {
       </main>
 
       {!isAdmin && <Footer />}
-      {!isAdmin && <StickyCartBar />}
+      {showStickyCartBar && <StickyCartBar />}
       {!isAdmin && <BottomNav />}
     </div>
   );

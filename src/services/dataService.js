@@ -126,11 +126,9 @@ export const whatsappService = {
       `Phone: ${customer.phone}`,
       `Village: ${customer.village}`,
       `Address: ${customer.address}`,
-      customer.landmark ? `Landmark: ${customer.landmark}` : '',
       customer.locationCoordinates
         ? `GPS pin: https://maps.google.com/?q=${customer.locationCoordinates}`
         : '',
-      customer.instructions ? `Delivery instructions: ${customer.instructions}` : '',
       customer.paymentMethod ? `Payment: ${customer.paymentMethod}` : '',
       customer.deliveryDate ? `Preferred delivery date: ${customer.deliveryDate}` : '',
       customer.orderNotes ? `Order notes: ${customer.orderNotes}` : '',

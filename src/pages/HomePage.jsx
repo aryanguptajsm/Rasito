@@ -31,14 +31,6 @@ export default function HomePage({ searchQuery = '' }) {
 
   return (
     <div className="min-h-screen">
-      {config.isDemoMode && (
-        <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-          <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-[10px] font-medium text-muted shadow-sm">
-            Demo Mode · Sample data for demonstration
-          </span>
-        </div>
-      )}
-
       <section className="mx-auto max-w-7xl px-4 pb-2 pt-5 sm:px-6 lg:px-8">
         <div className="mb-3 flex items-center justify-between">
           <div>
@@ -64,7 +56,7 @@ export default function HomePage({ searchQuery = '' }) {
             </Link>
           </div>
           <div className="pointer-events-none absolute -right-1 bottom-0 h-full w-[40%]" aria-hidden="true">
-            <span className="absolute right-[25%] top-[12%] flex h-14 w-14 rotate-[-10deg] items-center justify-center rounded-[18px] border-2 border-white bg-[#ffe1da] text-3xl shadow-md sm:h-[68px] sm:w-[68px] sm:text-4xl">🍕</span>
+            <span className="absolute right-[25%] top-[12%] flex h-14 w-14 rotate-[-10deg] items-center justify-center rounded-[18px] border-2 border-white bg-[#ffe1da] text-3xl shadow-md sm:h-[68px] sm:w-[68px] sm:text-4xl">🧁</span>
             <span className="absolute right-[8%] top-[42%] flex h-16 w-16 rotate-[9deg] items-center justify-center rounded-full border-2 border-white bg-[#fff0b8] text-4xl shadow-md sm:h-[76px] sm:w-[76px] sm:text-5xl">🎂</span>
             <span className="absolute bottom-[8%] right-[46%] flex h-12 w-12 rotate-[8deg] items-center justify-center rounded-[16px] border-2 border-white bg-[#e8f0d7] text-2xl shadow-md sm:h-14 sm:w-14 sm:text-3xl">🥐</span>
             <span className="absolute right-[48%] top-[18%] text-xl sm:text-2xl">🍪</span>

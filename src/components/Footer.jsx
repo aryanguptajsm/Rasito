@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone, Truck } from 'lucide-react';
 import config from '../data/config';
+import BrandLogo from './BrandLogo';
 
 export default function Footer() {
   return (
@@ -22,10 +23,9 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-3">
           <section className="footer-column">
-            <Link to="/" className="mb-4 flex w-fit items-center gap-2" aria-label="Restro home">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-terracotta text-sm font-extrabold text-dark">R</span>
-              <span className="text-xl font-bold tracking-tight text-white">Restro</span>
-            </Link>
+            <div className="mb-4">
+              <BrandLogo light />
+            </div>
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
               Cakes, pastries, patties, and more from local bakery suppliers, delivered to your door.
             </p>
@@ -103,11 +103,6 @@ export default function Footer() {
         <div className="mt-9 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {config.businessName}. Local bakery ordering made easy.</p>
           <p>{config.orderConfirmationNote}</p>
-          {config.isDemoMode && (
-            <span className="w-fit rounded-full bg-white/5 px-2.5 py-1 font-medium text-white/55">
-              Demo · Sample data
-            </span>
-          )}
         </div>
       </div>
     </footer>

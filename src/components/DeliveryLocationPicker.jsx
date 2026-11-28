@@ -141,9 +141,7 @@ export default function DeliveryLocationPicker({
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               event.preventDefault();
-              if (suggestions.length > 0) selectPlace(suggestions[0]);
-              else if (filteredAreas.length > 0) selectArea(filteredAreas[0]);
-              else setMenuOpen(false);
+              setMenuOpen(false);
             }
             if (event.key === 'Escape') setMenuOpen(false);
           }}
@@ -200,7 +198,7 @@ export default function DeliveryLocationPicker({
         )}
       </div>
       {error && <p id={`${id}-error`} className="mt-1 text-xs text-red-500">{error}</p>}
-      <p className="mt-1.5 text-xs text-muted">Enter your village or area. You can type a location even if it is not suggested.</p>
+      <p className="mt-1.5 text-xs text-muted">Type your location and press Enter, or choose a suggestion. You can enter an unlisted area too.</p>
       {suggestionError && <p role="status" className="mt-1 text-xs text-muted">{suggestionError}</p>}
     </div>
   );
