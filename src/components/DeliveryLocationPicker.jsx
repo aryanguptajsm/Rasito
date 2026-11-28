@@ -224,10 +224,16 @@ export default function DeliveryLocationPicker({
     setLocationError('');
     try {
       const selectedPlace = await lookupCoordinates(mapCenter);
-      setMapPlace(selectedPlace);
-      setSearchText(selectedPlace.name);
-      onChange(selectedPlace.name);
-      onCoordinatesChange(`${selectedPlace.lat},${selectedPlace.lon}`);
+      const typedName = searchText.trim();
+      const finalName =
+        typedName && typedName !== mapPlace?.name
+          ? typedName
+          : selectedPlace.name;
+      const finalPlace = { ...selectedPlace, name: finalName };
+      setMapPlace(finalPlace);
+      setSearchText(finalName);
+      onChange(finalName);
+      onCoordinatesChange(`${finalPlace.lat},${finalPlace.lon}`);
       if (closeAfterConfirm) setMapOpen(false);
     } catch {
       setLocationError('We could not identify this spot. Move the map to a nearby street and try again.');
@@ -244,26 +250,59 @@ export default function DeliveryLocationPicker({
 
     setLocating(true);
     setLocationError('');
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        try {
-          if (typeof coords.accuracy === 'number' && coords.accuracy > 500) {
-            setLocationError('Your GPS signal is not accurate enough yet. Move outdoors and try again.');
-          }
-          const selectedPlace = await lookupCoordinates({ lat: coords.latitude, lon: coords.longitude });
-          setMapPlace(selectedPlace);
-          setMapCenter({ lat: selectedPlace.lat, lon: selectedPlace.lon });
-          setSearchText(selectedPlace.name);
-          onChange(selectedPlace.name);
-          onCoordinatesChange(`${selectedPlace.lat},${selectedPlace.lon}`);
-          setMapOpen(true);
-        } catch {
-          setLocationError('We could not identify a nearby area. Search for your village or locality instead.');
-        } finally {
-          setLocating(false);
+    let watchId = null;
+    let timeoutId = null;
+    let settled = false;
+    let bestPosition = null;
+
+    const finishLocation = async ({ coords }) => {
+      if (settled) return;
+      settled = true;
+      if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+
+      try {
+        const selectedPlace = await lookupCoordinates({ lat: coords.latitude, lon: coords.longitude });
+        setMapPlace(selectedPlace);
+        setMapCenter({ lat: coords.latitude, lon: coords.longitude });
+        setSearchText(selectedPlace.name);
+        onChange(selectedPlace.name);
+        onCoordinatesChange(`${coords.latitude},${coords.longitude}`);
+        setMapOpen(true);
+      } catch {
+        setLocationError('We could not identify a nearby area. Search for your village or locality instead.');
+      } finally {
+        setLocating(false);
+      }
+    };
+
+    timeoutId = window.setTimeout(() => {
+      if (settled) return;
+      if (bestPosition) {
+        finishLocation(bestPosition);
+      } else {
+        settled = true;
+        if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+        setLocationError('Location timed out. Please move outdoors and try again.');
+        setLocating(false);
+      }
+    }, 20000);
+
+    watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const accuracy = Number(position.coords.accuracy);
+        if (!bestPosition || (!Number.isFinite(accuracy) || accuracy < bestPosition.coords.accuracy)) {
+          bestPosition = position;
+        }
+        if (Number.isFinite(accuracy) && accuracy <= 100) {
+          finishLocation(position);
         }
       },
       (geoError) => {
+        if (settled) return;
+        settled = true;
+        if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+        if (timeoutId !== null) window.clearTimeout(timeoutId);
         const message = geoError.code === 1
           ? 'Location permission was denied. Search for your village or locality instead.'
           : geoError.code === 2
@@ -299,7 +338,7 @@ export default function DeliveryLocationPicker({
     !exactAreaMatch &&
     suggestions.length === 0;
 
-  const addCustomVillage = () => {
+  const addCustomVillage = async () => {
     const villageName = customVillageText;
     if (!villageName) return;
     const nextCustomAreas = [...new Set([villageName, ...customAreas])]
@@ -315,6 +354,23 @@ export default function DeliveryLocationPicker({
     setLocationError('');
     onCoordinatesChange('');
     onChange(villageName);
+
+    try {
+      const params = new URLSearchParams({
+        q: `${villageName}, India`,
+        format: 'jsonv2',
+        addressdetails: '1',
+        limit: '1',
+        countrycodes: 'in',
+        'accept-language': 'en',
+      });
+      const response = await fetch(`${NOMINATIM_URL}/search?${params}`);
+      if (!response.ok) return;
+      const places = await response.json();
+      if (places.length > 0) applyPlace(places[0]);
+    } catch {
+      // The village name is still saved even when map geocoding is unavailable.
+    }
   };
   const mapWorldCenter = mapCenter ? coordinatesToWorld(mapCenter, mapZoom) : null;
   const firstTileX = mapWorldCenter ? Math.floor(mapWorldCenter.x / TILE_SIZE) : 0;
