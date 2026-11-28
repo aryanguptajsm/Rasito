@@ -145,7 +145,7 @@ export default function CheckoutPage({ deliveryLocation, onDeliveryLocationChang
             to="/orders"
             className="w-full bg-terracotta text-white font-semibold py-3 rounded-xl hover:bg-terracotta/90 transition-all text-center"
           >
-            View My Orders
+            Continue in WhatsApp
           </Link>
           <Link
             to="/"
